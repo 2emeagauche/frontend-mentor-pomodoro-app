@@ -1,26 +1,30 @@
-import useTimer from './useTimer'
+import { useState } from 'react'
+import { useTimer } from './useTimer'
 import './App.css'
 
 function App() {
+  const [taskDuration, setTaskDuration] = useState(5)
+  const [taskDisplay, setTaskDisplay] = useState(taskDuration * 1000)
+  const [shortBreakDuration, setShortBreakDuration] = useState(3)
+  const [shortBreakDisplay, setShortBreakDisplay] = useState(shortBreakDuration * 1000)
+  const [longBreakDuration, setLongBreakDuration] = useState(5)
+  const [longBreakDisplay, setLongBreakDisplay] = useState(longBreakDuration * 1000)
 
   const {
-    taskDuration,
-    shortBreakDuration,
-    longBreakDuration,
-    taskDisplay,
-    shortBreakDisplay,
-    longBreakDisplay,
     isPaused,
     start,
     handleStart,
     handleIsPaused,
-    setTaskDuration,
-    setShortBreakDuration,
-    setLongBreakDuration,
-    setTaskDisplay,
-    setShortBreakDisplay,
-    setLongBreakDisplay,
-  } = useTimer()
+  } = useTimer(
+      {
+        taskDuration,
+        shortBreakDuration,
+        longBreakDuration,
+        setTaskDisplay,
+        setShortBreakDisplay,
+        setLongBreakDisplay
+      }
+    )
 
   function handleSubmit(e){
     e.preventDefault()

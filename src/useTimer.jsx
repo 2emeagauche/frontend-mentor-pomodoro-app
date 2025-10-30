@@ -1,14 +1,18 @@
 import { useState, useEffect, useRef} from 'react'
 import Timer from 'advanced-timer'
 
-function useTimer() {
+export function useTimer(
+                          {
+                            taskDuration,
+                            shortBreakDuration,
+                            longBreakDuration,
+                            setTaskDisplay,
+                            setShortBreakDisplay,
+                            setLongBreakDisplay
+                          }
+                        )
+  {
 
-  const [taskDuration, setTaskDuration] = useState(5)
-  const [taskDisplay, setTaskDisplay] = useState(taskDuration * 1000)
-  const [shortBreakDuration, setShortBreakDuration] = useState(3)
-  const [shortBreakDisplay, setShortBreakDisplay] = useState(shortBreakDuration * 1000)
-  const [longBreakDuration, setLongBreakDuration] = useState(5)
-  const [longBreakDisplay, setLongBreakDisplay] = useState(longBreakDuration * 1000)
   const [isPaused, setIsPaused] = useState(false)
   const [start, setStart] = useState(false)
 
@@ -119,23 +123,10 @@ function useTimer() {
 
   
   return {
-    taskDuration,
-    shortBreakDuration,
-    longBreakDuration,
-    taskDisplay,
-    shortBreakDisplay,
-    longBreakDisplay,
     isPaused,
     start,
     handleStart,
     handleIsPaused,
-    setTaskDuration,
-    setShortBreakDuration,
-    setLongBreakDuration,
-    setTaskDisplay,
-    setShortBreakDisplay,
-    setLongBreakDisplay,
   }
 }
 
-export default useTimer
