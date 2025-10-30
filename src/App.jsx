@@ -16,13 +16,13 @@ function App() {
 
   const selectedTimer = useRef(null)
   const cycleCount = 4
-  let cycle = useRef(cycleCount)
+  let cycle = cycleCount
 
   function somePause(t, shortBreakTimer, longBreakTimer) {
     t.stop()
-    console.log("task #"+cycle.current+" finished")
-    --cycle.current
-    if(cycle.current > 0) {
+    console.log("task #"+cycle+" finished")
+    --cycle
+    if(cycle > 0) {
       shortBreakTimer.reset().start()
       selectedTimer.current = shortBreakTimer
       console.log("short pause started")
@@ -30,7 +30,7 @@ function App() {
       longBreakTimer.reset().start()
       selectedTimer.current = longBreakTimer
       console.log("long pause started")
-      cycle.current = cycleCount
+      cycle = cycleCount
     }
   }
   
@@ -39,7 +39,7 @@ function App() {
     console.log(type+" pause finished")
     nextTimer.reset().start()
     selectedTimer.current = nextTimer
-    console.log("task #"+cycle.current+" started")
+    console.log("task #"+cycle+" started")
   }
 
   function breakTimeHandler(type, nextTimer){
@@ -75,8 +75,11 @@ function App() {
   function handleStart() {
     if(start) {
       selectedTimer.current.stop()
-      cycle.current = cycleCount
+      cycle = cycleCount
       setStart(false)
+      setTaskDisplay(taskDuration * 1000)
+      setShortBreakDisplay(shortBreakDuration * 1000)
+      setLongBreakDisplay(longBreakDuration * 1000)
       setIsStoped(new Date())
     } else {
       setStart(true)
@@ -112,11 +115,7 @@ function App() {
         longBreakTimer.destroy()
       }
       selectedTimer.current = null
-      cycle.current = cycleCount
       setStart(false)
-      setTaskDisplay(taskDuration * 1000)
-      setShortBreakDisplay(shortBreakDuration * 1000)
-      setLongBreakDisplay(longBreakDuration * 1000)
     }
     
   }, [taskDuration, shortBreakDuration, longBreakDuration, isStoped])
@@ -129,26 +128,29 @@ function App() {
     const long_break_value = formData.get("long_break_value")
 
     setTaskDuration(task_value * 1)
-    setTaskDisplay(task_value * 1000)
     setShortBreakDuration(short_break_value * 1)
-    setShortBreakDisplay(short_break_value * 1000)
     setLongBreakDuration(long_break_value * 1)
+    setTaskDisplay(task_value * 1000)
+    setShortBreakDisplay(short_break_value * 1000)
     setLongBreakDisplay(long_break_value * 1000)
   }
 
   return (
     <>
-      <p>{taskDisplay}</p>
-      <p>{shortBreakDisplay}</p>
-      <p>{longBreakDisplay}</p>
+      <h1>Pomodoro App</h1>
+      <h2>Clocks</h2>
+      <p>Pomodoro clock: {taskDisplay}</p>
+      <p>Short break clock: {shortBreakDisplay}</p>
+      <p>Long break clock: {longBreakDisplay}</p>
+      <p><button onClick={handleStart}>{start ? 'stop' : 'start'} timer</button></p>
+      <p><button onClick={handleIsPaused}>{isPaused ? 'resume' : 'pause'} timer</button></p>
+      <h2>Setting time options (minutes)</h2>
       <form onSubmit={handleSubmit}>
-        <p><input type="text" name="task_value" defaultValue={taskDuration} /></p>
-        <p><input type="text" name="short_break_value" defaultValue={shortBreakDuration} /></p>
-        <p><input type="text" name="long_break_value" defaultValue={longBreakDuration} /></p>
+        <p><label htmlFor="task_value">pomodoro</label>: <input type="text" id="task_value" name="task_value" defaultValue={taskDuration} /> minutes</p>
+        <p><label htmlFor="short_break_value">short break</label>: <input type="text" id="short_break_value" name="short_break_value" defaultValue={shortBreakDuration} /> minutes</p>
+        <p><label htmlFor="long_break_value">long break</label>: <input type="text" id="long_break_value" name="long_break_value" defaultValue={longBreakDuration} /> minutes</p>
         <button type="submit">Apply</button>
       </form>
-      <p><button onClick={handleIsPaused}>{isPaused ? 'resume' : 'pause'} timer</button></p>
-      <p><button onClick={handleStart}>{start ? 'stop' : 'start'} timer</button></p>
     </>
   )
 }
