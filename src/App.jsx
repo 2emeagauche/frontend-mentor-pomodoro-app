@@ -6,103 +6,108 @@ function App() {
 
   const [taskDuration, setTaskDuration] = useState(10)
   const [taskDisplay, setTaskDisplay] = useState(taskDuration * 1000)
-  const [shortBreakDuration, setShortBreakDuration] = useState(2000)
-  const [shortBreakDisplay, setShortBreakDisplay] = useState(shortBreakDuration * 1000)
-  const [longBreakDuration, setLongBreakDuration] = useState(5000)
-  const [longBreakDisplay, setLongBreakDisplay] = useState(longBreakDuration * 1000)
-  const [pause, setPause] = useState(false)
+  const [shortPauseDuration, setShortPauseDuration] = useState(2)
+  const [shortPauseDisplay, setShortPauseDisplay] = useState(shortPauseDuration * 1000)
+  const [longPauseDuration, setLongPauseDuration] = useState(5)
+  const [longPauseDisplay, setLongPauseDisplay] = useState(longPauseDuration * 1000)
+  const [isPaused, setIsPaused] = useState(false)
   const [start, setStart] = useState(false)
-  const runningTimer = useRef(null)
+  const selectedTimer = useRef(null)
   const cycleCount = 4
   let cycle = cycleCount
 
-  function someBreak(t, shortBreakTimer, longBreakTimer) {
+  function somePause(t, shortPauseTimer, longPauseTimer) {
     t.stop()
     console.log("task #"+cycle+" finished")
     --cycle
     if(cycle > 0) {
-      shortBreakTimer.reset().start()
-      runningTimer.current = shortBreakTimer
+      shortPauseTimer.reset().start()
+      selectedTimer.current = shortPauseTimer
       console.log("short pause started")
     } else {
-      longBreakTimer.reset().start()
-      runningTimer.current = longBreakTimer
+      longPauseTimer.reset().start()
+      selectedTimer.current = longPauseTimer
       console.log("long pause started")
       cycle = cycleCount
     }
   }
   
-  function breakEnd(t, taskTimer, type) {
+  function pauseEnd(t, taskTimer, type) {
     t.stop()
     console.log(type+" pause finished")
     taskTimer.start()
-    runningTimer.current = taskTimer
+    selectedTimer.current = taskTimer
     console.log("task #"+cycle+" started")
   }
 
-  function breakTimer(breakDuration, taskTimer, type){
-    return new Timer(breakDuration).action((t)=>breakEnd(t, taskTimer, type)).repeat(false)
+  function pauseTimer(type, taskTimer){
+    return new Timer(1000)
+                .action(()=>setShortPauseDisplay(prev=>prev-1000))
+                .repeat(type === "short" ? shortPauseDuration : longPauseDuration)
+                .done((t)=>{
+                  setShortPauseDisplay((type === "short" ? shortPauseDuration : longPauseDuration) * 1000)
+                  pauseEnd(t, taskTimer, type)
+                })
   }
 
   function handlePause() {
-    if(pause) {
-      setPause(false)
-      runningTimer.current.resume()
+    if(isPaused) {
+      setIsPaused(false)
+      selectedTimer.current.resume()
     } else {
-      setPause(true)
-      runningTimer.current.pause()
+      setIsPaused(true)
+      selectedTimer.current.pause()
     }
   }
 
   function handleStart() {
-    console.log(runningTimer.current.statusCode)
+    console.log(selectedTimer.current.statusCode)
     if(start) {
       setStart(false)
       setTaskDisplay(taskDuration * 1000)
-      runningTimer.current.stop()
+      selectedTimer.current.stop()
       cycle = cycleCount
     } else {
       setStart(true)
-      runningTimer.current.reset().start()
+      selectedTimer.current.reset().start()
       console.log("task #"+cycle+" started")
     }
   }
 
-  function handleTaskDisplay(){
-    setTaskDisplay(prev=>prev-1000)
-  }
+  // function handleTaskDisplay(){
+  //   setTaskDisplay(prev=>prev-1000)
+  // }
   
   useEffect(() => {
     const taskTimer = new Timer(1000)
-                          .action(handleTaskDisplay)
+                          .action(()=>setTaskDisplay(prev=>prev-1000))
                           .repeat(taskDuration)
                           .done((t)=>{
-                                      someBreak(t, shortBreakTimer, longBreakTimer)
+                                      somePause(t, shortPauseTimer, longPauseTimer)
                                       setTaskDisplay(taskDuration * 1000)
                                     })
-    // const taskTimer = new Timer(1000).action((t)=>console.log(t.timestamp)).repeat(taskDuration).done((t)=>console.log(t.status))
-    const shortBreakTimer = breakTimer(shortBreakDuration, taskTimer, "short")
-    const longBreakTimer = breakTimer(longBreakDuration, taskTimer, "long")
-    runningTimer.current = taskTimer
+    const shortPauseTimer = pauseTimer("short", taskTimer)
+    const longPauseTimer = pauseTimer("long", taskTimer)
+    selectedTimer.current = taskTimer
 
     return ()=>{
       if(taskTimer) taskTimer.destroy()
-      if(shortBreakTimer) shortBreakTimer.destroy()
-      if(longBreakTimer) longBreakTimer.destroy()
+      if(shortPauseTimer) shortPauseTimer.destroy()
+      if(longPauseTimer) longPauseTimer.destroy()
     }
 
-  }, [taskDuration, shortBreakDuration, longBreakDuration])
+  }, [taskDuration, shortPauseDuration, longPauseDuration, start])
 
 
   return (
     <>
     <p>{taskDisplay}</p>
-    <p>{shortBreakDisplay}</p>
-    <p>{longBreakDisplay}</p>
+    <p>{shortPauseDisplay}</p>
+    <p>{longPauseDisplay}</p>
     <p><input type="text" value={taskDuration} onChange={(e)=>setTaskDuration(e.target.value * 1)} /></p>
-    <p><input type="text" value={shortBreakDuration} onChange={(e)=>setShortBreakDuration(e.target.value * 1)} /></p>
-    <p><input type="text" value={longBreakDuration} onChange={(e)=>setLongBreakDuration(e.target.value * 1)} /></p>
-    <p><button onClick={handlePause}>{pause ? 'resume' : 'pause'} timer</button></p>
+    <p><input type="text" value={shortPauseDuration} onChange={(e)=>setShortPauseDuration(e.target.value * 1)} /></p>
+    <p><input type="text" value={longPauseDuration} onChange={(e)=>setLongPauseDuration(e.target.value * 1)} /></p>
+    <p><button onClick={handlePause}>{isPaused ? 'resume' : 'pause'} timer</button></p>
     <p><button onClick={handleStart}>{start ? 'stop' : 'start'} timer</button></p>
     </>
   )
