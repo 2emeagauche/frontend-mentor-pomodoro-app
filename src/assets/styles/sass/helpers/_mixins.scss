@@ -1,0 +1,43 @@
+@use "sass:map";
+@use 'variables' as v;
+
+// breakpoints mobile first
+@mixin breakpoint($size) {
+  $breakpoint-value: map.get(v.$breakpoints, $size);
+  
+  @if $breakpoint-value == null {
+    @error "Breakpoint '#{$size}' n'existe pas dans la map $breakpoints.";
+  }
+  
+  @if $breakpoint-value == 0 {
+    // Pour 'xs', pas de media query nécessaire (mobile-first)
+    @content;
+  } @else {
+    @media screen and (min-width: $breakpoint-value) {
+      @content;
+    }
+  }
+}
+
+// Typography
+@mixin font-kumbh-sans {
+  font-family: "Kumbh Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings: "YOPQ" 300;
+}
+@mixin roboto-slab {
+  font-family: "Roboto Slab", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+@mixin space-mono-regular {
+  font-family: "Space Mono", monospace;
+  font-weight: 400;
+  font-style: normal;
+}
+@mixin space-mono-bold {
+  font-family: "Space Mono", monospace;
+  font-weight: 700;
+  font-style: normal;
+}

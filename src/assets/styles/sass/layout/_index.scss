@@ -1,0 +1,26 @@
+@use "sass:map";
+@use '../helpers/variables' as v;
+@use '../helpers/mixins' as mx;
+@use '../helpers/typography-mixins' as typo;
+
+// General
+body{
+  @include mx.font-kumbh-sans;
+  @include typo.text-preset-3-mobile;
+}
+
+h1, h2, h3, h4, ul, p{
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 0;
+}
+
+a{
+  text-decoration: none;
+}
+
+button{
+  background-color: transparent;
+  border: 0;
+  padding: 0;
+}
