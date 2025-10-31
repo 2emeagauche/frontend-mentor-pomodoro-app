@@ -24,3 +24,34 @@ button{
   border: 0;
   padding: 0;
 }
+
+.clock{
+  width: 11rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #161932;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &__numeric{
+    position: absolute;
+    z-index: 1;
+    color: white;
+  }
+  &__hand{
+    position: relative;
+    z-index: 0;
+    width: 10rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    padding: 0.25rem;
+    &::after{
+      content: '';
+      display: block;
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: #161932;
+    }
+  }
+}

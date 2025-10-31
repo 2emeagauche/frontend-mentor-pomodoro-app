@@ -14,6 +14,7 @@ export function useTimer(
 
   const [isPaused, setIsPaused] = useState(false)
   const [start, setStart] = useState(false)
+  const [activeTimer, setActiveTimer] = useState(1)
   const [isStoped, setIsStoped] = useState(new Date())
 
   const selectedTimer = useRef(null)
@@ -21,25 +22,28 @@ export function useTimer(
   let cycle = cycleCount
 
   function somePause(t, shortBreakTimer, longBreakTimer) {
-    t.stop()
+    t.resume().stop()
     --cycle
     if (cycle > 0) {
+      setActiveTimer(2)
       shortBreakTimer.reset().start()
       selectedTimer.current = shortBreakTimer
     } else {
+      setActiveTimer(3)
       longBreakTimer.reset().start()
       selectedTimer.current = longBreakTimer
       cycle = cycleCount
     }
   }
 
-  function breakFinished(t, nextTimer) {
-    t.stop()
-    nextTimer.reset().start()
-    selectedTimer.current = nextTimer
+  function breakFinished(t, taskTimer) {
+    t.resume().stop()
+    setActiveTimer(1)
+    taskTimer.reset().start()
+    selectedTimer.current = taskTimer
   }
 
-  function breakTimeHandler(type, nextTimer) {
+  function breakTimeHandler(type, taskTimer) {
     const breakOptions = {
       "short": {
         duration: shortBreakDuration,
@@ -55,7 +59,7 @@ export function useTimer(
       .repeat(breakOptions[type].duration)
       .done((t) => {
         breakOptions[type].setDisplay(breakOptions[type].duration)
-        breakFinished(t, nextTimer, type)
+        breakFinished(t, taskTimer, type)
       })
   }
 
@@ -71,7 +75,7 @@ export function useTimer(
 
   function handleStart() {
     if (start) {
-      selectedTimer.current.stop()
+      selectedTimer.current.resume().stop()
       cycle = cycleCount
       setIsStoped(new Date())
       setStart(false)
@@ -89,7 +93,7 @@ export function useTimer(
   }
 
   useEffect(() => {
-    console.log("fresh")
+    setActiveTimer(1)
     const taskTimer = new Timer(1000)
       .action(handleSetTaskDisplay)
       .repeat(taskDuration)
@@ -123,6 +127,7 @@ export function useTimer(
     start,
     handleStart,
     handleIsPaused,
+    activeTimer,
   }
 }
 
