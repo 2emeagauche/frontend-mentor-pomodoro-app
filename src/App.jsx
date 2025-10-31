@@ -38,7 +38,7 @@ function App() {
       case 3: return longBreakDisplay
     }
   }
-  
+
   function progression() {
     switch(activeTimer){
       case 1: return (taskDisplay / taskDuration)*100
@@ -64,8 +64,7 @@ function App() {
 
   return (
     <>
-      <h1>Pomodoro App</h1>
-      <h2>Clocks</h2>
+      <h1>Pomodoro</h1>
       <p><span style={{color:activeTimer===1?'red':'black'}}>Pomodoro</span></p>
       <p><span style={{color:activeTimer===2?'red':'black'}}>Short break</span></p>
       <p><span style={{color:activeTimer===3?'red':'black'}}>Long break</span></p>
@@ -78,9 +77,9 @@ function App() {
       <p><button onClick={handleIsPaused}>{isPaused && start ? 'resume' : 'pause'} timer</button></p>
       <h2>Setting time options (minutes)</h2>
       <form onSubmit={handleSubmit}>
-        <p><label htmlFor="task_value">pomodoro</label>: <input type="number" id="task_value" name="task_value" defaultValue={taskDuration / (isUnitMinute ? 60 : 1)} /> {isUnitMinute ? "minutes" : "seconds"}</p>
-        <p><label htmlFor="short_break_value">short break</label>: <input type="number" id="short_break_value" name="short_break_value" defaultValue={shortBreakDuration / (isUnitMinute ? 60 : 1)} /> {isUnitMinute ? "minutes" : "seconds"}</p>
-        <p><label htmlFor="long_break_value">long break</label>: <input type="number" id="long_break_value" name="long_break_value" defaultValue={longBreakDuration / (isUnitMinute ? 60 : 1)} /> {isUnitMinute ? "minutes" : "seconds"}</p>
+        <p><label htmlFor="task_value">pomodoro</label>: <input type="number" min={1} max={59} id="task_value" name="task_value" defaultValue={taskDuration / (isUnitMinute ? 60 : 1)} /> {isUnitMinute ? "minutes" : "seconds"}</p>
+        <p><label htmlFor="short_break_value">short break</label>: <input type="number" min={1} max={59} id="short_break_value" name="short_break_value" defaultValue={shortBreakDuration / (isUnitMinute ? 60 : 1)} /> {isUnitMinute ? "minutes" : "seconds"}</p>
+        <p><label htmlFor="long_break_value">long break</label>: <input type="number" min={1} max={59} id="long_break_value" name="long_break_value" defaultValue={longBreakDuration / (isUnitMinute ? 60 : 1)} /> {isUnitMinute ? "minutes" : "seconds"}</p>
         <button type="submit">Apply</button>
       </form>
     </>

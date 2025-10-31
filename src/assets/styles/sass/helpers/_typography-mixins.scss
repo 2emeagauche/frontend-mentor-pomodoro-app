@@ -1,66 +1,173 @@
 @use './mixins' as mx;
 
-@mixin text-preset-1-mobile{
+@mixin fontA-1-mobile{
+  @include mx.font-kumbh-sans;
+  font-weight: 700;
+  font-size: 5rem;
+  line-height: 125%;
+  letter-spacing: -0.3125rem;
+}
+@mixin fontA-1{
+  @include mx.font-kumbh-sans;
   font-weight: 700;
   font-size: 6.25rem;
-  line-height: 100%;
-  letter-spacing: 0;
-}
-@mixin text-preset-1{
-  font-size: 12.5rem;
-  line-height: 115%;
-  letter-spacing: -0.0125rem;
-}
-@mixin text-preset-2-mobile{
-  font-weight: 700;
-  font-size: 1.5rem;
   line-height: 125%;
-  letter-spacing: 0;
+  letter-spacing: -0.3125rem;
 }
-  @mixin text-preset-2{
-  font-size: 3.5rem;
-  line-height: 115%;
-}
-@mixin text-preset-3-mobile{
+@mixin fontA-2-mobile{
+  @include mx.font-kumbh-sans;
   font-weight: 700;
   font-size: .875rem;
-  line-height: 200%;
-  letter-spacing: -0.0156rem;
-}
-@mixin text-preset-3{
-  font-size: 1.125rem;
-  line-height: 125%;
-  letter-spacing: 0;
-}
-@mixin text-preset-4-mobile{
-  font-size: .625rem;
   line-height: 120%;
-  letter-spacing: 0;
+  letter-spacing: .8125rem;
 }
-@mixin text-preset-4{
-  font-size: .9375rem;
-  line-height: 135%;
-}
-@mixin text-preset-5-mobile{
-  font-weight: 400;
-  font-size: .5625rem;
+@mixin fontA-2{
+  @include mx.font-kumbh-sans;
+  font-weight: 700;
+  font-size: 1rem;
   line-height: 125%;
-  letter-spacing: .125rem;
+  letter-spacing: .9375rem;
 }
-@mixin text-preset-5{
-  font-weight: 400;
-  font-size: .8125rem;
-  letter-spacing: 0;
-}
-@mixin text-preset-6{
+@mixin fontA-3-mobile{
+  @include mx.font-kumbh-sans;
   font-weight: 700;
   font-size: .75rem;
   line-height: 125%;
-  letter-spacing: .1563rem;
+  letter-spacing: 0;
 }
-@mixin text-preset-7{
+@mixin fontA-3{
+  @include mx.font-kumbh-sans;
   font-weight: 700;
-  font-size: .625rem;
+  font-size: .875rem;
   line-height: 120%;
-  letter-spacing: .125rem;
+  letter-spacing: 0;
+}
+
+@mixin fontB-1-mobile{
+  @include mx.roboto-slab;
+  font-weight: 700;
+  font-size: 5rem;
+  line-height: 133%;
+  letter-spacing: 0;
+}
+@mixin fontB-1{
+  @include mx.roboto-slab;
+  font-weight: 700;
+  font-size: 6.25rem;
+  line-height: 130%;
+  letter-spacing: 0;
+}
+@mixin fontB-2-mobile{
+  @include mx.roboto-slab;
+  font-weight: 700;
+  font-size: .875rem;
+  line-height: 130%;
+  letter-spacing: .8125rem;
+}
+@mixin fontB-2{
+  @include mx.roboto-slab;
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 125%;
+  letter-spacing: .9375rem;
+}
+@mixin fontB-3-mobile{
+  @include mx.roboto-slab;
+  font-weight: 700;
+  font-size: .75rem;
+  line-height: 133%;
+  letter-spacing: 0;
+}
+@mixin fontB-3{
+  @include mx.roboto-slab;
+  font-weight: 700;
+  font-size: .875rem;
+  line-height: 130%;
+  letter-spacing: 0;
+}
+
+@mixin fontC-1-mobile{
+  @include mx.space-mono;
+  font-weight: 400;
+  font-size: 5rem;
+  line-height: 120%;
+  letter-spacing: -0.625rem;
+}
+@mixin fontC-1{
+  @include mx.space-mono;
+  font-weight: 400;
+  font-size: 6.25rem;
+  line-height: 150%;
+  letter-spacing: -0.625rem;
+}
+@mixin fontC-2-mobile{
+  @include mx.space-mono;
+  font-weight: 700;
+  font-size: 0.875rem;
+  line-height: 150%;
+  letter-spacing: .8125rem;
+}
+@mixin fontC-2{
+  @include mx.space-mono;
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 150%;
+  letter-spacing: .9375rem;
+}
+@mixin fontC-3-mobile{
+  @include mx.space-mono;
+  font-weight: 700;
+  font-size: .75rem;
+  line-height: 150%;
+  letter-spacing: 0;
+}
+@mixin fontC-3{
+  @include mx.space-mono;
+  font-weight: 700;
+  font-size: .8125rem;
+  line-height: 145%;
+  letter-spacing: 0;
+}
+
+@mixin fontA-settings-1{
+  @include mx.font-kumbh-sans;
+  font-weight: 700;
+  font-size: 1.75rem;
+  line-height: 125%;
+  letter-spacing: 0;
+}
+@mixin fontA-settings-2{
+  @include mx.font-kumbh-sans;
+  font-weight: 700;
+  font-size: .8125rem;
+  line-height: 145%;
+  letter-spacing: 0;
+}
+@mixin fontB-settings-2{
+  @include mx.roboto-slab;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 125%;
+  letter-spacing: 0;
+}
+@mixin fontC-settings-2{
+  @include mx.space-mono;
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 125%;
+  letter-spacing: 0;
+}
+@mixin fontA-settings-3{
+  @include mx.font-kumbh-sans;
+  font-weight: 700;
+  font-size: .8125rem;
+  line-height: 125%;
+  letter-spacing: .3125rem;
+}
+@mixin fontA-settings-4{
+  @include mx.font-kumbh-sans;
+  font-weight: 700;
+  font-size: .75rem;
+  line-height: 125%;
+  letter-spacing: 0;
 }

@@ -31,13 +31,11 @@
   font-optical-sizing: auto;
   font-style: normal;
 }
-@mixin space-mono-regular {
+@mixin space-mono {
   font-family: "Space Mono", monospace;
-  font-weight: 400;
   font-style: normal;
 }
-@mixin space-mono-bold {
+@mixin space-mono {
   font-family: "Space Mono", monospace;
-  font-weight: 700;
   font-style: normal;
 }
