@@ -10,6 +10,7 @@ function App() {
   const [shortBreakDisplay, setShortBreakDisplay] = useState(shortBreakDuration)
   const [longBreakDuration, setLongBreakDuration] = useState(5 * (isUnitMinute ? 60 : 1))
   const [longBreakDisplay, setLongBreakDisplay] = useState(longBreakDuration)
+  const [fontCategory, setFontCategory] = useState('A')
 
 
   const { isPaused, start, handleStart, handleIsPaused, activeTimer } = useTimer(
@@ -53,18 +54,28 @@ function App() {
     const task_value = formData.get("task_value") * (isUnitMinute ? 60 : 1)
     const short_break_value = formData.get("short_break_value") * (isUnitMinute ? 60 : 1)
     const long_break_value = formData.get("long_break_value") * (isUnitMinute ? 60 : 1)
+    const font_category = formData.get("font_category")
 
-    setTaskDuration(task_value)
-    setTaskDisplay(task_value)
-    setShortBreakDuration(short_break_value)
-    setShortBreakDisplay(short_break_value)
-    setLongBreakDuration(long_break_value)
-    setLongBreakDisplay(long_break_value)
+    if(task_value !== taskDuration) {
+      setTaskDuration(task_value)
+      setTaskDisplay(task_value)
+    }
+    if(short_break_value !== shortBreakDuration) {
+      setShortBreakDuration(short_break_value)
+      setShortBreakDisplay(short_break_value)
+    }
+    if(long_break_value !== longBreakDuration) {
+      setLongBreakDuration(long_break_value)
+      setLongBreakDisplay(long_break_value)
+    }
+    if(font_category !== fontCategory) {
+      setFontCategory(font_category)
+    }
   }
 
   return (
     <>
-      <h1>Pomodoro</h1>
+      <h1 className={`text-preset-1-mobile-${fontCategory}`}>Pomodoro</h1>
       <p><span style={{color:activeTimer===1?'red':'black'}}>Pomodoro</span></p>
       <p><span style={{color:activeTimer===2?'red':'black'}}>Short break</span></p>
       <p><span style={{color:activeTimer===3?'red':'black'}}>Long break</span></p>
@@ -80,6 +91,9 @@ function App() {
         <p><label htmlFor="task_value">pomodoro</label>: <input type="number" min={1} max={59} id="task_value" name="task_value" defaultValue={taskDuration / (isUnitMinute ? 60 : 1)} /> {isUnitMinute ? "minutes" : "seconds"}</p>
         <p><label htmlFor="short_break_value">short break</label>: <input type="number" min={1} max={59} id="short_break_value" name="short_break_value" defaultValue={shortBreakDuration / (isUnitMinute ? 60 : 1)} /> {isUnitMinute ? "minutes" : "seconds"}</p>
         <p><label htmlFor="long_break_value">long break</label>: <input type="number" min={1} max={59} id="long_break_value" name="long_break_value" defaultValue={longBreakDuration / (isUnitMinute ? 60 : 1)} /> {isUnitMinute ? "minutes" : "seconds"}</p>
+        <p><label htmlFor="font_A">font A</label>: <input type="radio" value="A" defaultChecked name="font_category" id="font_A" /></p>
+        <p><label htmlFor="font_B">font B</label>: <input type="radio" value="B" name="font_category" id="font_B" /></p>
+        <p><label htmlFor="font_C">font C</label>: <input type="radio" value="C" name="font_category" id="font_C" /></p>
         <button type="submit">Apply</button>
       </form>
     </>

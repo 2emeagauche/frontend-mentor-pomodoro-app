@@ -4,8 +4,14 @@
 @use '../helpers/typography-mixins' as typo;
 
 // General
-body{
-  @include mx.font-kumbh-sans;
+.text-preset-1-mobile-A{
+  @include typo.text-preset-1-mobile('A');
+}
+.text-preset-1-mobile-B{
+  @include typo.text-preset-1-mobile('B');
+}
+.text-preset-1-mobile-C{
+  @include typo.text-preset-1-mobile('C');
 }
 
 h1, h2, h3, h4, ul, p{
