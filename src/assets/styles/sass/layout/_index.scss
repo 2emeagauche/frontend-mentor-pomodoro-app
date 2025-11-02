@@ -4,14 +4,53 @@
 @use '../helpers/typography-mixins' as typo;
 
 // General
-.text-preset-1-mobile-A{
-  @include typo.text-preset-1-mobile('A');
+.text-preset-1-A{
+  @include typo.text-preset-1-('A');
 }
-.text-preset-1-mobile-B{
-  @include typo.text-preset-1-mobile('B');
+.text-preset-1-B{
+  @include typo.text-preset-1-('B');
 }
-.text-preset-1-mobile-C{
-  @include typo.text-preset-1-mobile('C');
+.text-preset-1-C{
+  @include typo.text-preset-1-('C');
+}
+
+.text-preset-2-A{
+  @include typo.text-preset-2-('A');
+}
+.text-preset-2-B{
+  @include typo.text-preset-2-('B');
+}
+.text-preset-2-C{
+  @include typo.text-preset-2-('C');
+}
+
+.text-preset-3-A{
+  @include typo.text-preset-3-('A');
+}
+.text-preset-3-B{
+  @include typo.text-preset-3-('B');
+}
+.text-preset-3-C{
+  @include typo.text-preset-3-('C');
+}
+
+.text-settings-preset-1-A{
+  @include typo.text-settings-preset-1-A;
+}
+.text-settings-preset-2-A{
+  @include typo.text-settings-preset-2-('A');
+}
+.text-settings-preset-2-B{
+  @include typo.text-settings-preset-2-('B');
+}
+.text-settings-preset-2-C{
+  @include typo.text-settings-preset-2-('C');
+}
+.text-settings-preset-3-A{
+  @include typo.text-settings-preset-3-A;
+}
+.text-settings-preset-4-A{
+  @include typo.text-settings-preset-4-A;
 }
 
 h1, h2, h3, h4, ul, p{
@@ -28,6 +67,18 @@ button{
   background-color: transparent;
   border: 0;
   padding: 0;
+}
+
+h1{
+  @include typo.font-kumbh-sans;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: auto;
+  letter-spacing: 0;
+  text-transform: lowercase;
+  @include mx.breakpoint('tablet-portrait'){
+    font-size: 2rem;
+  }
 }
 
 .clock{

@@ -27,7 +27,7 @@ function App() {
 
   function clockDisplay(num) {
     if (isUnitMinute) {
-      return Math.floor(num / 60) + " : " + num % 60
+      return Math.floor(num / 60) + ":" + num % 60
     }
     return num
   }
@@ -75,26 +75,32 @@ function App() {
 
   return (
     <>
-      <h1 className={`text-preset-1-mobile-${fontCategory}`}>Pomodoro</h1>
-      <p><span style={{color:activeTimer===1?'red':'black'}}>Pomodoro</span></p>
-      <p><span style={{color:activeTimer===2?'red':'black'}}>Short break</span></p>
-      <p><span style={{color:activeTimer===3?'red':'black'}}>Long break</span></p>
+      <h1>Pomodoro</h1>
+      <p className={`text-preset-3-${fontCategory}`}><span style={{color:activeTimer===1?'red':'black'}}>Pomodoro</span></p>
+      <p className={`text-preset-3-${fontCategory}`}><span style={{color:activeTimer===2?'red':'black'}}>Short break</span></p>
+      <p className={`text-preset-3-${fontCategory}`}><span style={{color:activeTimer===3?'red':'black'}}>Long break</span></p>
       <div className='clock'>
         <div className='clock__hand' style={{background:`conic-gradient(#48abe0 ${progression()}%, transparent ${progression()}%) no-repeat`}}>
         </div>
-        <p className='clock__numeric'>{clockDisplay(whichClock())}</p>
+        <p className={`text-preset-1-${fontCategory} clock__numeric`}>{clockDisplay(whichClock())}</p>
       </div>
-      <p><button onClick={handleStart}>{start ? 'stop' : 'start'} timer</button></p>
-      <p><button onClick={handleIsPaused}>{isPaused && start ? 'resume' : 'pause'} timer</button></p>
-      <h2>Setting time options (minutes)</h2>
+      <p><button className={`text-preset-2-${fontCategory}`} onClick={handleStart}>{start ? 'stop' : 'start'} timer</button></p>
+      <p><button className={`text-preset-2-${fontCategory}`} onClick={handleIsPaused}>{isPaused && start ? 'resume' : 'pause'} timer</button></p>
+      <h2 className='text-settings-preset-1-A'>Setting</h2>
       <form onSubmit={handleSubmit}>
-        <p><label htmlFor="task_value">pomodoro</label>: <input type="number" min={1} max={59} id="task_value" name="task_value" defaultValue={taskDuration / (isUnitMinute ? 60 : 1)} /> {isUnitMinute ? "minutes" : "seconds"}</p>
-        <p><label htmlFor="short_break_value">short break</label>: <input type="number" min={1} max={59} id="short_break_value" name="short_break_value" defaultValue={shortBreakDuration / (isUnitMinute ? 60 : 1)} /> {isUnitMinute ? "minutes" : "seconds"}</p>
-        <p><label htmlFor="long_break_value">long break</label>: <input type="number" min={1} max={59} id="long_break_value" name="long_break_value" defaultValue={longBreakDuration / (isUnitMinute ? 60 : 1)} /> {isUnitMinute ? "minutes" : "seconds"}</p>
-        <p><label htmlFor="font_A">font A</label>: <input type="radio" value="A" defaultChecked name="font_category" id="font_A" /></p>
-        <p><label htmlFor="font_B">font B</label>: <input type="radio" value="B" name="font_category" id="font_B" /></p>
-        <p><label htmlFor="font_C">font C</label>: <input type="radio" value="C" name="font_category" id="font_C" /></p>
-        <button type="submit">Apply</button>
+        <fieldset>
+          <legend className='text-settings-preset-3-A'>Time ({isUnitMinute ? "minutes" : "seconds"})</legend>
+          <p><label className='text-settings-preset-4-A' htmlFor="task_value">pomodoro</label>: <input className='text-settings-preset-3-A' type="number" min={1} max={59} id="task_value" name="task_value" defaultValue={taskDuration / (isUnitMinute ? 60 : 1)} /></p>
+          <p><label className='text-settings-preset-4-A' htmlFor="short_break_value">short break</label>: <input className='text-settings-preset-3-A' type="number" min={1} max={59} id="short_break_value" name="short_break_value" defaultValue={shortBreakDuration / (isUnitMinute ? 60 : 1)} /></p>
+          <p><label className='text-settings-preset-4-A' htmlFor="long_break_value">long break</label>: <input className='text-settings-preset-3-A' type="number" min={1} max={59} id="long_break_value" name="long_break_value" defaultValue={longBreakDuration / (isUnitMinute ? 60 : 1)} /></p>
+        </fieldset>
+        <fieldset>
+          <legend className='text-settings-preset-3-A'>Font</legend>
+          <p><label className='text-settings-preset-2-A' htmlFor="font_A">Aa</label>: <input type="radio" value="A" defaultChecked name="font_category" id="font_A" /></p>
+          <p><label className='text-settings-preset-2-B' htmlFor="font_B">Aa</label>: <input type="radio" value="B" name="font_category" id="font_B" /></p>
+          <p><label className='text-settings-preset-2-C' htmlFor="font_C">Aa</label>: <input type="radio" value="C" name="font_category" id="font_C" /></p>
+        </fieldset>
+        <button className={`text-settings-preset-2-${fontCategory}`} type="submit">Apply</button>
       </form>
     </>
   )

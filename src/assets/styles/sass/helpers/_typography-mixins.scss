@@ -1,217 +1,195 @@
 @use "sass:map";
 @use './mixins' as mx;
 
+@mixin font-kumbh-sans {
+  font-family: "Kumbh Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings: "YOPQ" 300;
+}
+@mixin roboto-slab {
+  font-family: "Roboto Slab", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+@mixin space-mono {
+  font-family: "Space Mono", monospace;
+  font-style: normal;
+}
+
 // Text preset 1
-$text-preset-1-mobile: (
+$text-preset-1: (
+  font-size: 5rem,
+  font-size-big: 6.25rem,
   "A":(
-    font-family: ("Kumbh Sans", sans-serif),
-    font-optical-sizing: "auto",
-    font-style: "normal",
     font-weight: 700,
-    font-size: 5rem,
     line-height: 125%,
     letter-spacing: -0.3125rem,
   ),
   "B":(
-    font-family: ("Roboto Slab", serif),
-    font-optical-sizing: "auto",
-    font-style: normal,
     font-weight: 700,
-    font-size: 5rem,
     line-height: 133%,
+    line-height-big: 130%,
     letter-spacing: 0
     ),
   "C":(
-    font-family: ("Space Mono", monospace),
-    font-style: normal,
     font-weight: 400,
-    font-size: 5rem,
     line-height: 120%,
+    line-height-big: 150%,
     letter-spacing: -0.625rem
   )
 );
-@mixin text-preset-1-mobile($type){
-  $font-config: map.get($text-preset-1-mobile, $type);
-  font-family: map.get($font-config, 'font-family');
-  font-optical-sizing: map.get($font-config, 'font-optical-sizing');
-  font-style: map.get($font-config, 'font-style');
+@mixin text-preset-1-($type){
+  @if $type == 'A' {
+    @include font-kumbh-sans;
+  } @else if $type == 'B' {
+    @include roboto-slab;
+  } @else if $type == 'C' {
+    @include space-mono;
+  }
+  font-size: map.get($text-preset-1, 'font-size');
+  $font-config: map.get($text-preset-1, $type);
   font-weight: map.get($font-config, 'font-weight');
-  font-size: map.get($font-config, 'font-size');
   line-height: map.get($font-config, 'line-height');
   letter-spacing: map.get($font-config, 'letter-spacing');
-}
-
-
-
-@mixin fontA-1-mobile{
-  @include mx.font-kumbh-sans;
-  font-weight: 700;
-  font-size: 5rem;
-  line-height: 125%;
-  letter-spacing: -0.3125rem;
-}
-@mixin fontB-1-mobile{
-  @include mx.roboto-slab;
-  font-weight: 700;
-  font-size: 5rem;
-  line-height: 133%;
-  letter-spacing: 0;
-}
-@mixin fontC-1-mobile{
-  @include mx.space-mono;
-  font-weight: 400;
-  font-size: 5rem;
-  line-height: 120%;
-  letter-spacing: -0.625rem;
-}
-@mixin fontA-1{
-  @include mx.font-kumbh-sans;
-  font-weight: 700;
-  font-size: 6.25rem;
-  line-height: 125%;
-  letter-spacing: -0.3125rem;
-}
-@mixin fontB-1{
-  @include mx.roboto-slab;
-  font-weight: 700;
-  font-size: 6.25rem;
-  line-height: 130%;
-  letter-spacing: 0;
-}
-@mixin fontC-1{
-  @include mx.space-mono;
-  font-weight: 400;
-  font-size: 6.25rem;
-  line-height: 150%;
-  letter-spacing: -0.625rem;
+  @include mx.breakpoint('tablet-portrait'){
+    font-size: map.get($text-preset-1, 'font-size-big');
+    line-height: map.get($font-config, 'line-height-big');
+  }
 }
 
 // Text preset 2
-@mixin fontA-2-mobile{
-  @include mx.font-kumbh-sans;
-  font-weight: 700;
-  font-size: .875rem;
-  line-height: 120%;
-  letter-spacing: .8125rem;
-}
-@mixin fontA-2{
-  @include mx.font-kumbh-sans;
-  font-weight: 700;
-  font-size: 1rem;
-  line-height: 125%;
-  letter-spacing: .9375rem;
-}
-@mixin fontB-2-mobile{
-  @include mx.roboto-slab;
-  font-weight: 700;
-  font-size: .875rem;
-  line-height: 130%;
-  letter-spacing: .8125rem;
-}
-@mixin fontB-2{
-  @include mx.roboto-slab;
-  font-weight: 700;
-  font-size: 1rem;
-  line-height: 125%;
-  letter-spacing: .9375rem;
-}
-@mixin fontC-2-mobile{
-  @include mx.space-mono;
-  font-weight: 700;
-  font-size: 0.875rem;
-  line-height: 150%;
-  letter-spacing: .8125rem;
-}
-@mixin fontC-2{
-  @include mx.space-mono;
-  font-weight: 700;
-  font-size: 1rem;
-  line-height: 150%;
-  letter-spacing: .9375rem;
+$text-preset-2: (
+  font-size: 0.875rem,
+  font-size-big: 1rem,
+  font-weight: 700,
+  letter-spacing: .8125rem,
+  letter-spacing-big: .9375rem,
+  "A":(
+    line-height: 120%,
+    line-height-big: 125%,
+  ),
+  "B":(
+    line-height: 130%,
+    line-height-big: 125%,
+    ),
+  "C":(
+    line-height: 150%,
+  )
+);
+@mixin text-preset-2-($type){
+  @if $type == 'A' {
+    @include font-kumbh-sans;
+  } @else if $type == 'B' {
+    @include roboto-slab;
+  } @else if $type == 'C' {
+    @include space-mono;
+  }
+  font-size: map.get($text-preset-2, 'font-size');
+  font-weight: map.get($text-preset-2, 'font-weight');
+  letter-spacing: map.get($text-preset-2, 'letter-spacing');
+  $font-config: map.get($text-preset-2, $type);
+  line-height: map.get($font-config, 'line-height');
+  @include mx.breakpoint('tablet-portrait'){
+    font-size: map.get($text-preset-2, 'font-size-big');
+    letter-spacing: map.get($text-preset-2, 'letter-spacing-big');
+    line-height: map.get($font-config, 'line-height-big');
+  }
 }
 
 // Text preset 3
-@mixin fontA-3-mobile{
-  @include mx.font-kumbh-sans;
-  font-weight: 700;
-  font-size: .75rem;
-  line-height: 125%;
-  letter-spacing: 0;
-}
-@mixin fontA-3{
-  @include mx.font-kumbh-sans;
-  font-weight: 700;
-  font-size: .875rem;
-  line-height: 120%;
-  letter-spacing: 0;
-}
-@mixin fontB-3-mobile{
-  @include mx.roboto-slab;
-  font-weight: 700;
-  font-size: .75rem;
-  line-height: 133%;
-  letter-spacing: 0;
-}
-@mixin fontB-3{
-  @include mx.roboto-slab;
-  font-weight: 700;
-  font-size: .875rem;
-  line-height: 130%;
-  letter-spacing: 0;
-}
-@mixin fontC-3-mobile{
-  @include mx.space-mono;
-  font-weight: 700;
-  font-size: .75rem;
-  line-height: 150%;
-  letter-spacing: 0;
-}
-@mixin fontC-3{
-  @include mx.space-mono;
-  font-weight: 700;
-  font-size: .8125rem;
-  line-height: 145%;
-  letter-spacing: 0;
+$text-preset-3: (
+  font-size: 0.75rem,
+  font-weight: 700,
+  letter-spacing: 0,
+  "A":(
+    font-size-big: 0.875rem,
+    line-height: 125%,
+    line-height-big: 120%,
+    ),
+    "B":(
+    font-size-big: 0.875rem,
+    line-height: 133%,
+    line-height-big: 130%,
+    ),
+    "C":(
+    font-size-big: 0.8125rem,
+    line-height: 150%,
+    line-height-big: 145%,
+  )
+);
+@mixin text-preset-3-($type){
+  @if $type == 'A' {
+    @include font-kumbh-sans;
+  } @else if $type == 'B' {
+    @include roboto-slab;
+  } @else if $type == 'C' {
+    @include space-mono;
+  }
+  font-size: map.get($text-preset-3, 'font-size');
+  font-weight: map.get($text-preset-3, 'font-weight');
+  letter-spacing: map.get($text-preset-3, 'letter-spacing');
+  $font-config: map.get($text-preset-3, $type);
+  line-height: map.get($font-config, 'line-height');
+  @include mx.breakpoint('tablet-portrait'){
+    font-size: map.get($font-config, 'font-size-big');
+    line-height: map.get($font-config, 'line-height-big');
+  }
 }
 
-// Text preset settings
-@mixin fontA-settings-1{
-  @include mx.font-kumbh-sans;
+// Text settings preset 1
+@mixin text-settings-preset-1-A{
+  @include font-kumbh-sans;
   font-weight: 700;
   font-size: 1.75rem;
   line-height: 125%;
   letter-spacing: 0;
 }
-@mixin fontA-settings-2{
-  @include mx.font-kumbh-sans;
-  font-weight: 700;
-  font-size: .8125rem;
-  line-height: 145%;
-  letter-spacing: 0;
+
+// Text settings preset 2
+$text-settings-preset-2: (
+  font-size: 1rem,
+  letter-spacing: 0,
+  "A":(
+    font-weight: 700,
+    line-height: 145%,
+    ),
+  "B":(
+    font-weight: 400,
+    line-height: 125%,
+    ),
+  "C":(
+    font-weight: 700,
+    line-height: 125%,
+  )
+);
+@mixin text-settings-preset-2-($type){
+  @if $type == 'A' {
+    @include font-kumbh-sans;
+  } @else if $type == 'B' {
+    @include roboto-slab;
+  } @else if $type == 'C' {
+    @include space-mono;
+  }
+  letter-spacing: map.get($text-settings-preset-2, 'letter-spacing');
+  font-size: map.get($text-settings-preset-2, 'font-size');
+  $font-config: map.get($text-settings-preset-2, $type);
+  font-weight: map.get($font-config, 'font-weight');
+  line-height: map.get($font-config, 'line-height');
 }
-@mixin fontB-settings-2{
-  @include mx.roboto-slab;
-  font-weight: 400;
-  font-size: 1rem;
-  line-height: 125%;
-  letter-spacing: 0;
-}
-@mixin fontC-settings-2{
-  @include mx.space-mono;
-  font-weight: 700;
-  font-size: 1rem;
-  line-height: 125%;
-  letter-spacing: 0;
-}
-@mixin fontA-settings-3{
-  @include mx.font-kumbh-sans;
+
+// Text settings preset 3
+@mixin text-settings-preset-3-A{
+  @include font-kumbh-sans;
   font-weight: 700;
   font-size: .8125rem;
   line-height: 125%;
   letter-spacing: .3125rem;
 }
-@mixin fontA-settings-4{
-  @include mx.font-kumbh-sans;
+
+// Text settings preset 4
+@mixin text-settings-preset-4-A{
+  @include font-kumbh-sans;
   font-weight: 700;
   font-size: .75rem;
   line-height: 125%;
