@@ -6,5 +6,6 @@
 @use 'helpers/_mixins.scss' as mx;
 @use 'helpers/_sr-only.scss';
 @use 'helpers/_typography-mixins.scss';
+@use 'helpers/_custom-properties.scss';
 // Layout
 @use 'layout/_index.scss';

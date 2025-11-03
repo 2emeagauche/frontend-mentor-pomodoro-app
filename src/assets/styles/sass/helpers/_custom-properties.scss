@@ -1,0 +1,105 @@
+@use "sass:map";
+@use './mixins' as mx;
+
+:root {
+  --font-family: "Kumbh Sans", sans-serif;
+  --font-optical-sizing: auto;
+  --font-style: normal;
+  --font-variation-settings: "YOPQ" 300;
+}
+:root:has(#font_B:checked) {
+  --font-family: "Roboto Slab", serif;
+  --font-variation-settings: notmal;
+}
+:root:has(#font_C:checked) {
+  --font-family: "Space Mono", monospace;
+  --font-variation-settings: notmal;
+}
+
+.timer-steps__step{
+  --font-weight: 700;
+  --font-size: .75rem;
+  --line-height: 125%;
+  --letter-spacing: 0;
+  @include mx.breakpoint('tablet-portrait'){
+    --font-size: .875rem;
+    --line-height: 120%;
+  }
+}
+:root:has(#font_B:checked) .timer-steps__step{
+  --line-height: 133%;
+  @include mx.breakpoint('tablet-portrait'){
+    --font-size: .875rem;
+    --line-height: 130%;
+  }
+}
+:root:has(#font_C:checked) .timer-steps__step{
+  --line-height: 150%;
+  @include mx.breakpoint('tablet-portrait'){
+    --font-size: .8125rem;
+    --line-height: 145%;
+  }
+}
+
+.clock__numeric{
+  --font-weight: 700;
+  --font-size: 5rem;
+  --line-height: 125%;
+  --letter-spacing: -0.3125rem;
+  @include mx.breakpoint('tablet-portrait'){
+    --font-size: 6.25rem;
+    --line-height: 125%;
+  }
+}
+:root:has(#font_B:checked) .clock__numeric{
+  --line-height: 133%;
+  --letter-spacing: 0;
+  @include mx.breakpoint('tablet-portrait'){
+    --line-height: 130%;
+  }
+}
+:root:has(#font_C:checked) .clock__numeric{
+  --font-weight: 400;
+  --line-height: 120%;
+  --letter-spacing: -0.625rem;
+  @include mx.breakpoint('tablet-portrait'){
+    --line-height: 150%;
+  }
+}
+
+.button-timer{
+  --font-weight: 700;
+  --font-size: .875rem;
+  --line-height: 120%;
+  --letter-spacing: .8125rem;
+  @include mx.breakpoint('tablet-portrait'){
+    --font-size: 1rem;
+    --letter-spacing: .9375rem;
+  }
+}
+:root:has(#font_B:checked) .button-timer{
+  --line-height: 130%;
+  @include mx.breakpoint('tablet-portrait'){
+    --line-height: 125%;
+  }
+}
+:root:has(#font_C:checked) .button-timer{
+  --line-height: 150%;
+}
+
+.form-tuning__submit{
+  --font-weight: 700;
+  --font-size: .8125rem;
+  --line-height: 145%;
+  --letter-spacing: 0;
+}
+:root:has(#font_B:checked) .form-tuning__submit{
+  --font-weight: 400;
+  --font-size: 1rem;
+  --line-height: 125%;
+}
+:root:has(#font_C:checked) .form-tuning__submit{
+  --font-weight: 700;
+  --font-size: 1rem;
+  --line-height: 125%;
+}

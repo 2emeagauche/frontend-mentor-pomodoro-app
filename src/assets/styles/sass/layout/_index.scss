@@ -4,53 +4,12 @@
 @use '../helpers/typography-mixins' as typo;
 
 // General
-.text-preset-1-A{
-  @include typo.text-preset-1-('A');
-}
-.text-preset-1-B{
-  @include typo.text-preset-1-('B');
-}
-.text-preset-1-C{
-  @include typo.text-preset-1-('C');
+#root, .container{
+  min-height: 100vh;
 }
 
-.text-preset-2-A{
-  @include typo.text-preset-2-('A');
-}
-.text-preset-2-B{
-  @include typo.text-preset-2-('B');
-}
-.text-preset-2-C{
-  @include typo.text-preset-2-('C');
-}
-
-.text-preset-3-A{
-  @include typo.text-preset-3-('A');
-}
-.text-preset-3-B{
-  @include typo.text-preset-3-('B');
-}
-.text-preset-3-C{
-  @include typo.text-preset-3-('C');
-}
-
-.text-settings-preset-1-A{
-  @include typo.text-settings-preset-1-A;
-}
-.text-settings-preset-2-A{
-  @include typo.text-settings-preset-2-('A');
-}
-.text-settings-preset-2-B{
-  @include typo.text-settings-preset-2-('B');
-}
-.text-settings-preset-2-C{
-  @include typo.text-settings-preset-2-('C');
-}
-.text-settings-preset-3-A{
-  @include typo.text-settings-preset-3-A;
-}
-.text-settings-preset-4-A{
-  @include typo.text-settings-preset-4-A;
+.container{
+  background-color: v.$blue-850;
 }
 
 h1, h2, h3, h4, ul, p{
@@ -76,9 +35,46 @@ h1{
   line-height: auto;
   letter-spacing: 0;
   text-transform: lowercase;
+  color: white;
   @include mx.breakpoint('tablet-portrait'){
     font-size: 2rem;
   }
+}
+
+.timer-steps__step,
+.clock__numeric,
+.button-timer,
+.form-setting__submit{
+  font-family: var(--font-family);
+  font-optical-sizing: var(--font-optical-sizing);
+  font-style: var(--font-style);
+  font-variation-settings: var(--font-variation-settings);
+  font-weight: var(--font-weight);
+  font-size: var(--font-size);
+  line-height: var(--line-height);
+  letter-spacing: var(--letter-spacing);
+}
+
+.timer-steps{
+  display: inline-flex;
+  align-items: center;
+  height: 3.9375rem;
+  padding: .4688rem;
+  border-radius: 2rem;
+  background-color: v.$blue-900;
+}
+.timer-steps__step{
+  text-transform: lowercase;
+  color: v.$blue-100;
+  opacity: 0.4;
+  height: 3rem;
+  padding: 1.0313rem 1.4375rem;
+  border-radius: 1.5rem;
+}
+.timer-steps__step--active{
+  background-color: v.$red;
+  color: v.$blue-900;
+  opacity: 1;
 }
 
 .clock{
@@ -89,25 +85,75 @@ h1{
   display: flex;
   justify-content: center;
   align-items: center;
-  &__numeric{
-    position: absolute;
-    z-index: 1;
-    color: white;
-  }
-  &__hand{
-    position: relative;
-    z-index: 0;
-    width: 10rem;
+}
+.clock__numeric{
+  position: absolute;
+  z-index: 1;
+  color: white;
+}
+.clock__hand{
+  position: relative;
+  z-index: 0;
+  width: 10rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  padding: 0.25rem;
+  &::after{
+    content: '';
+    display: block;
+    width: 100%;
     aspect-ratio: 1;
     border-radius: 50%;
-    padding: 0.25rem;
-    &::after{
-      content: '';
-      display: block;
-      width: 100%;
-      aspect-ratio: 1;
-      border-radius: 50%;
-      background: #161932;
-    }
+    background: #161932;
   }
+}
+
+.button-timer{
+}
+
+.dialog-setting__title{
+  @include typo.font-kumbh-sans;
+  font-weight: 700;
+  font-size: 1.75rem;
+  line-height: 125%;
+  letter-spacing: 0;
+}
+
+.form-setting__legend,
+.form-setting__time-input{
+  @include typo.font-kumbh-sans;
+  font-weight: 700;
+  font-size: .8125rem;
+  line-height: 125%;
+  letter-spacing: .3125rem;
+}
+
+.form-setting__time-label{
+  @include typo.font-kumbh-sans;
+  font-weight: 700;
+  font-size: .75rem;
+  line-height: 125%;
+  letter-spacing: 0;
+}
+
+.form-setting__font-label{
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 125%;
+  letter-spacing: 0;
+}
+.form-setting__font-label--A{
+  @include typo.font-kumbh-sans;
+  font-size: .8125rem;
+  line-height: 145%;
+}
+.form-setting__font-label--B{
+  @include typo.roboto-slab;
+  font-weight: 400;
+}
+.form-setting__font-label--C{
+  @include typo.space-mono;
+}
+
+.form-setting__submit{
 }
