@@ -1,7 +1,7 @@
-import { useState } from 'react'
-import { useTimer } from './useTimer'
+import { useState, useRef } from 'react'
+import { useTimer } from './hooks/useTimer'
+import { InputNumber } from './components/InputNumber'
 import './assets/styles/sass/main.scss'
-import iconSetting from './assets/images/icon-settings.svg'
 
 function App() {
   const isUnitMinute = false
@@ -11,6 +11,8 @@ function App() {
   const [shortBreakDisplay, setShortBreakDisplay] = useState(shortBreakDuration)
   const [longBreakDuration, setLongBreakDuration] = useState(5 * (isUnitMinute ? 60 : 1))
   const [longBreakDisplay, setLongBreakDisplay] = useState(longBreakDuration)
+  const [dialogIsOpen, setDialogIsOpen] = useState(false);
+  const dialogBox = useRef(null)
 
   const { isPaused, start, handleStart, handleIsPaused, activeTimer } = useTimer(
     {
@@ -68,6 +70,11 @@ function App() {
     }
   }
 
+  function toggleDialog(){
+    setDialogIsOpen(!dialogIsOpen)
+    dialogIsOpen ? dialogBox.current.close() : dialogBox.current.showModal()
+  }
+
   return (
     <>
       <div className='container'>
@@ -81,36 +88,57 @@ function App() {
           <div className='clock__disc'>
             <div className='clock__hand' style={{background:`conic-gradient(#48abe0 ${progression()}%, transparent ${progression()}%) no-repeat`}}>
             </div>
+            <button className='clock__button clock__button--start' onClick={handleStart}>&nbsp;{start ? 'stop' : 'start'}</button>
             <p className='clock__numeric'>{clockDisplay(whichClock())}</p>
-            <p className='clock__buttons'>
-              <button className='clock__button' onClick={handleStart}>&nbsp;{start ? 'stop' : 'start'}</button>
-              <button className='clock__button clock__button--small' onClick={handleIsPaused}>&nbsp;{isPaused && start ? 'resume' : 'pause'}</button>
-            </p>
+            <button className='clock__button clock__button--pause' onClick={handleIsPaused}>&nbsp;{isPaused && start ? 'resume' : 'pause'}</button>
           </div>
         </div>
-        <button type='button' className='button-setting'>
-          <img src={iconSetting} width={28} height={28} alt="open the setting dialog box" />
+        <button type='button' className='button-setting' onClick={toggleDialog}>
+          <svg className='button-setting__icon' xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+            <path d="M26.965 17.682l-2.927-2.317c.055-.448.097-.903.097-1.365 0-.462-.042-.917-.097-1.365l2.934-2.317a.702.702 0 00.167-.896l-2.775-4.851a.683.683 0 00-.847-.301l-3.454 1.407a10.506 10.506 0 00-2.345-1.379l-.52-3.71A.716.716 0 0016.503 0h-5.55a.703.703 0 00-.687.588l-.52 3.71c-.847.357-1.63.819-2.345 1.379L3.947 4.27a.691.691 0 00-.847.301L.325 9.422a.705.705 0 00.167.896l2.927 2.317c-.055.448-.097.903-.097 1.365 0 .462.042.917.097 1.365L.492 17.682a.702.702 0 00-.167.896L3.1 23.429a.683.683 0 00.847.301L7.4 22.323a10.506 10.506 0 002.345 1.379l.52 3.71c.056.329.34.588.687.588h5.55a.703.703 0 00.687-.588l.52-3.71c.847-.357 1.631-.819 2.346-1.379l3.454 1.407c.313.119.673 0 .847-.301l2.775-4.851a.705.705 0 00-.167-.896zM13.73 18.9c-2.685 0-4.857-2.191-4.857-4.9 0-2.709 2.172-4.9 4.857-4.9 2.684 0 4.856 2.191 4.856 4.9 0 2.71-2.172 4.9-4.856 4.9z"/>
+          </svg>
           <span className="sr-only">open the setting dialog box</span>
         </button>
       </div>
-      <div className='dialog-setting'>
-        <h2 className='dialog-setting__title'>Setting</h2>
+      <dialog className='dialog-setting' ref={dialogBox}>
+        <div className="dialog-setting__header">
+          <h2 className='dialog-setting__title'>Setting</h2>
+          <button type='button' className='dialog-setting__button-close' onClick={toggleDialog}>
+            <svg className='dialog-setting__button-close__icon' xmlns="http://www.w3.org/2000/svg" width="14" height="14">
+              <path fill-rule="evenodd" d="M11.95.636l1.414 1.414L8.414 7l4.95 4.95-1.414 1.414L7 8.414l-4.95 4.95L.636 11.95 5.586 7 .636 2.05 2.05.636 7 5.586l4.95-4.95z"/>
+            </svg>
+          </button>
+        </div>
         <form className='form-setting' onSubmit={handleSubmit}>
-          <fieldset>
-            <legend className='form-setting__legend'>Time ({isUnitMinute ? "minutes" : "seconds"})</legend>
-            <p><label className='form-setting__time-label' htmlFor='task_value'>pomodoro</label>: <input className='form-setting__time-input' type='number' min={1} max={59} id='task_value' name='task_value' defaultValue={taskDuration / (isUnitMinute ? 60 : 1)} /></p>
-            <p><label className='form-setting__time-label' htmlFor='short_break_value'>short break</label>: <input className='form-setting__time-input' type='number' min={1} max={59} id='short_break_value' name='short_break_value' defaultValue={shortBreakDuration / (isUnitMinute ? 60 : 1)} /></p>
-            <p><label className='form-setting__time-label' htmlFor='long_break_value'>long break</label>: <input className='form-setting__time-input' type='number' min={1} max={59} id='long_break_value' name='long_break_value' defaultValue={longBreakDuration / (isUnitMinute ? 60 : 1)} /></p>
-          </fieldset>
-          <fieldset>
-            <legend className='form-setting__legend'>Font</legend>
-            <p><label className='form-setting__font-label form-setting__font-label--A' htmlFor='font_A'>Aa</label>: <input type='radio' value='A' defaultChecked name='font_category' id='font_A' /></p>
-            <p><label className='form-setting__font-label form-setting__font-label--B' htmlFor='font_B'>Aa</label>: <input type='radio' value='B' name='font_category' id='font_B' /></p>
-            <p><label className='form-setting__font-label form-setting__font-label--C' htmlFor='font_C'>Aa</label>: <input type='radio' value='C' name='font_category' id='font_C' /></p>
-          </fieldset>
+          <div className="form-setting__block">
+            <fieldset className='form-setting__fieldset'>
+              <legend className='form-setting__legend'>Time ({isUnitMinute ? "minutes" : "seconds"})</legend>
+              <div className='form-setting__time'>
+                <label className='form-setting__time-label' htmlFor='task_value'>pomodoro</label>
+                <InputNumber inputId={'task_value'} name={'task_value'} defaultValue={taskDuration / (isUnitMinute ? 60 : 1)} />
+                <label className='form-setting__time-label' htmlFor='short_break_value'>short break</label>
+                <InputNumber inputId={'short_break_value'} name={'short_break_value'} defaultValue={shortBreakDuration / (isUnitMinute ? 60 : 1)} />
+                <label className='form-setting__time-label' htmlFor='long_break_value'>long break</label>
+                <InputNumber inputId={'long_break_value'} name={'long_break_value'} defaultValue={longBreakDuration / (isUnitMinute ? 60 : 1)} />
+              </div>
+            </fieldset>
+          </div>
+          <div className="form-setting__block">
+            <fieldset className='form-setting__fieldset'>
+              <legend className='form-setting__legend'>Font</legend>
+              <p><label className='form-setting__font-label form-setting__font-label--A' htmlFor='font_A'>Aa</label>: <input type='radio' value='A' defaultChecked name='font_category' id='font_A' /></p>
+              <p><label className='form-setting__font-label form-setting__font-label--B' htmlFor='font_B'>Aa</label>: <input type='radio' value='B' name='font_category' id='font_B' /></p>
+              <p><label className='form-setting__font-label form-setting__font-label--C' htmlFor='font_C'>Aa</label>: <input type='radio' value='C' name='font_category' id='font_C' /></p>
+            </fieldset>
+          </div>
+          <div className="form-setting__block">
+            <fieldset className='form-setting__fieldset'>
+              <legend className='form-setting__legend'>Color</legend>
+            </fieldset>
+          </div>
           <button className='form-setting__submit' type='submit'>Apply</button>
         </form>
-      </div>
+      </dialog>
     </>
   )
 }

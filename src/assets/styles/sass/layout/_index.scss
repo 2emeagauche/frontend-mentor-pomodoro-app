@@ -14,6 +14,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  color:v.$blue-900;
 }
 
 h1, h2, h3, h4, ul, p{
@@ -76,7 +77,6 @@ h1{
   text-transform: lowercase;
   text-align: center;
   color: v.$blue-100;
-  opacity: 0.4;
   width: 33.33%;
   height: 3rem;
   padding: 1.0313rem 0;
@@ -85,7 +85,6 @@ h1{
 .timer-steps__step--active{
   background-color: v.$red;
   color: v.$blue-900;
-  opacity: 1;
 }
 
 .clock{
@@ -112,21 +111,22 @@ h1{
   color: v.$blue-100;
 }
 .clock__buttons{
+  margin-top: 9rem;
+}
+.clock__button{
   grid-row: 1/-1;
   grid-column: 1/-1;
   justify-self: center;
   align-self: center;
-  margin-top: 9rem;
-}
-.clock__button{
   display: block;
   color: v.$blue-100;
   text-transform: uppercase;
-  margin: 0 auto;
 }
-.clock__button--small{
-  font-size: 0.5em;
-  margin-top: 1rem;
+.clock__button--start{
+  margin-bottom: 9rem;
+}
+.clock__button--pause{
+  margin-top: 9rem;
 }
 .clock__hand{
   grid-row: 1/-1;
@@ -146,9 +146,40 @@ h1{
 }
 
 .button-setting{
+  --button-opacity:0.4;
   margin-top: auto;
+  &:hover, &:focus{
+    --button-opacity:1;
+  }
+}
+.button-setting__icon{
+  path{
+    fill:v.$blue-100;
+    fill-opacity: var(--button-opacity);
+  }
 }
 
+.dialog-setting{
+  background-color: white;
+  border: 0;
+  border-radius: 1rem;
+  width: 100%;
+  padding-inline: 0;
+  padding-bottom: 0;
+  &::backdrop{
+    background-color: v.$blue-850;
+  }
+}
+
+.dialog-setting__header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-inline: 1.4375rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid v.$grey-200;
+  margin-bottom: 1rem;
+}
 
 .dialog-setting__title{
   @include typo.font-kumbh-sans;
@@ -158,13 +189,57 @@ h1{
   letter-spacing: 0;
 }
 
-.form-setting__legend,
-.form-setting__time-input{
+.dialog-setting__button-close{
+  --button-opacity:0.4;
+  &:hover, &:focus{
+    --button-opacity:1;
+  }
+}
+.dialog-setting__button-close__icon{
+  path{
+    fill:v.$blue-850;
+    fill-opacity: var(--button-opacity);
+  }
+}
+
+.form-setting{
+  padding-inline: 1.4375rem;
+}
+
+.form-setting__block{
+  padding: 1.5rem 0;
+  border-bottom: 1px solid v.$grey-200;
+  &:first-of-type{
+    padding-top: 0;
+  }
+  &:last-of-type{
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+}
+.form-setting__fieldset{
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.form-setting__legend{
   @include typo.font-kumbh-sans;
   font-weight: 700;
   font-size: .8125rem;
   line-height: 125%;
   letter-spacing: .3125rem;
+  text-transform: uppercase;
+  margin: auto auto 1rem;
+}
+
+.form-setting__time{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  align-items: center;
+  row-gap: 0.5rem;
+  color: v.$blue-850;
 }
 
 .form-setting__time-label{
@@ -173,6 +248,64 @@ h1{
   font-size: .75rem;
   line-height: 125%;
   letter-spacing: 0;
+  opacity: 0.4;
+}
+
+.form-setting__time-input-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.form-setting__time-input{
+  @include typo.font-kumbh-sans;
+  font-weight: 700;
+  font-size: .8125rem;
+  line-height: 125%;
+  letter-spacing: .3125rem;
+  border: 0;
+  background-color: v.$blue-50;
+  border-radius: .625rem;
+  padding: .7188rem 1rem;
+  width: 100%;
+}
+
+.form-setting__time-input::-webkit-inner-spin-button,
+.form-setting__time-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.form-setting__time-input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.time-input__arrow-buttons {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5625rem;
+}
+
+.time-input__arrow-button {
+  --button-opacity:0.4;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  &:hover{
+    --button-opacity:1;
+  }
+}
+
+.time-input__arrow-button__icon {
+  path{
+    stroke:v.$blue-850;
+    stroke-opacity: var(--button-opacity);
+  }
 }
 
 .form-setting__font-label{
