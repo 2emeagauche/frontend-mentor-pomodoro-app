@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useTimer } from './useTimer'
 import './assets/styles/sass/main.scss'
+import iconSetting from './assets/images/icon-settings.svg'
 
 function App() {
   const isUnitMinute = false
@@ -76,13 +77,21 @@ function App() {
           <li className={`timer-steps__step ${(activeTimer===2) && 'timer-steps__step--active'}`}>Short break</li>
           <li className={`timer-steps__step ${(activeTimer===3) && 'timer-steps__step--active'}`}>Long break</li>
         </ul>
-        <div className='clock'>
-          <div className='clock__hand' style={{background:`conic-gradient(#48abe0 ${progression()}%, transparent ${progression()}%) no-repeat`}}>
+        <div className="clock">
+          <div className='clock__disc'>
+            <div className='clock__hand' style={{background:`conic-gradient(#48abe0 ${progression()}%, transparent ${progression()}%) no-repeat`}}>
+            </div>
+            <p className='clock__numeric'>{clockDisplay(whichClock())}</p>
+            <p className='clock__buttons'>
+              <button className='clock__button' onClick={handleStart}>&nbsp;{start ? 'stop' : 'start'}</button>
+              <button className='clock__button clock__button--small' onClick={handleIsPaused}>&nbsp;{isPaused && start ? 'resume' : 'pause'}</button>
+            </p>
           </div>
-          <p className='clock__numeric'>{clockDisplay(whichClock())}</p>
         </div>
-        <p><button className='button-timer' onClick={handleStart}>{start ? 'stop' : 'start'} timer</button></p>
-        <p><button className='button-timer' onClick={handleIsPaused}>{isPaused && start ? 'resume' : 'pause'} timer</button></p>
+        <button type='button' className='button-setting'>
+          <img src={iconSetting} width={28} height={28} alt="open the setting dialog box" />
+          <span className="sr-only">open the setting dialog box</span>
+        </button>
       </div>
       <div className='dialog-setting'>
         <h2 className='dialog-setting__title'>Setting</h2>

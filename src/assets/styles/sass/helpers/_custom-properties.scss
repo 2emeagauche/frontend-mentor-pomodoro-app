@@ -67,7 +67,7 @@
   }
 }
 
-.button-timer{
+.clock__button{
   --font-weight: 700;
   --font-size: .875rem;
   --line-height: 120%;
@@ -77,13 +77,13 @@
     --letter-spacing: .9375rem;
   }
 }
-:root:has(#font_B:checked) .button-timer{
+:root:has(#font_B:checked) .clock__button{
   --line-height: 130%;
   @include mx.breakpoint('tablet-portrait'){
     --line-height: 125%;
   }
 }
-:root:has(#font_C:checked) .button-timer{
+:root:has(#font_C:checked) .clock__button{
   --line-height: 150%;
 }
 
