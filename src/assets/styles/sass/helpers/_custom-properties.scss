@@ -6,6 +6,9 @@
   --font-optical-sizing: auto;
   --font-style: normal;
   --font-variation-settings: "YOPQ" 300;
+  --chosen-color: #F87070;
+  // --red: #F87070;
+  // --purple: #D881F8;
 }
 :root:has(#font_B:checked) {
   --font-family: "Roboto Slab", serif;
@@ -14,6 +17,12 @@
 :root:has(#font_C:checked) {
   --font-family: "Space Mono", monospace;
   --font-variation-settings: notmal;
+}
+:root:has(#color_B:checked) {
+  --chosen-color: #70F3F8;
+}
+:root:has(#color_C:checked) {
+  --chosen-color: #D881F8;
 }
 
 .timer-steps__step{
@@ -87,18 +96,18 @@
   --line-height: 150%;
 }
 
-.form-tuning__submit{
+.form-setting__submit{
   --font-weight: 700;
   --font-size: .8125rem;
   --line-height: 145%;
   --letter-spacing: 0;
 }
-:root:has(#font_B:checked) .form-tuning__submit{
+:root:has(#font_B:checked) .form-setting__submit{
   --font-weight: 400;
   --font-size: 1rem;
   --line-height: 125%;
 }
-:root:has(#font_C:checked) .form-tuning__submit{
+:root:has(#font_C:checked) .form-setting__submit{
   --font-weight: 700;
   --font-size: 1rem;
   --line-height: 125%;

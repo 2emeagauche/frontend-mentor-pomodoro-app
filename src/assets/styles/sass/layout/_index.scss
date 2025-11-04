@@ -60,6 +60,10 @@ h1{
   line-height: var(--line-height);
   letter-spacing: var(--letter-spacing);
 }
+.clock__numeric{
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+}
 
 .timer-steps{
   display: inline-flex;
@@ -81,9 +85,10 @@ h1{
   height: 3rem;
   padding: 1.0313rem 0;
   border-radius: 1.5rem;
+  transition: all 0.6s;
 }
 .timer-steps__step--active{
-  background-color: v.$red;
+  background-color: var(--chosen-color);
   color: v.$blue-900;
 }
 
@@ -160,15 +165,23 @@ h1{
 }
 
 .dialog-setting{
-  background-color: white;
+  background-color: transparent;
   border: 0;
-  border-radius: 1rem;
   width: 100%;
-  padding-inline: 0;
-  padding-bottom: 0;
+  padding: 0;
+  padding-bottom: 1.66rem;
   &::backdrop{
     background-color: v.$blue-850;
   }
+}
+
+.dialog-setting__background{
+  padding-top: 1.125rem;
+  padding-bottom: 3.625rem;
+  background-color: white;
+  border: 0;
+  border-radius: 1rem;
+  position: relative;
 }
 
 .dialog-setting__header{
@@ -308,24 +321,95 @@ h1{
   }
 }
 
-.form-setting__font-label{
+.form-setting__radio-group{
+  display: flex;
+  gap: 1rem;
+  margin: auto;
+  width: fit-content;
+}
+
+.form-setting__custom-radio{
+  display: grid;
+  width: 2.5rem;
+  aspect-ratio: 1;
+}
+
+.form-setting__font-radio-input,
+.form-setting__color-radio-input{
+  appearance: none;
+  width: 2.5rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  grid-row: 1/-1;
+  grid-column: 1/-1;
+  transition: background-color 0.6s;
+}
+.form-setting__font-radio-input{
+  background-color: v.$blue-50;
+  &:checked{
+    background-color: v.$blue-900;
+    & ~ .form-setting__font-preview{
+      color: white;
+    }
+  }
+}
+.form-setting__color-radio-input{
+  &--A{
+    background-color: v.$red;
+  }
+  &--B{
+    background-color: v.$cyan;
+  }
+  &--C{
+    background-color: v.$purple;
+  }
+  &:checked{
+    & ~ .form-setting__color-radio-tick{
+      opacity: 1;
+    }
+  }
+}
+.form-setting__font-preview,
+.form-setting__color-radio-tick{
+  grid-row: 1/-1;
+  grid-column: 1/-1;
+  margin: auto;
+}
+.form-setting__font-preview{
+  transition: color 0.6s;
   font-weight: 700;
   font-size: 1rem;
   line-height: 125%;
   letter-spacing: 0;
+  color: v.$blue-850;
 }
-.form-setting__font-label--A{
+.form-setting__color-radio-tick{
+  transition: opacity 0.6s;
+  opacity: 0;
+}
+.form-setting__font-preview--A{
   @include typo.font-kumbh-sans;
   font-size: .8125rem;
   line-height: 145%;
 }
-.form-setting__font-label--B{
+.form-setting__font-preview--B{
   @include typo.roboto-slab;
   font-weight: 400;
 }
-.form-setting__font-label--C{
+.form-setting__font-preview--C{
   @include typo.space-mono;
 }
 
 .form-setting__submit{
+  position: absolute;
+  bottom: -1.66rem;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 8.75rem;
+  height: 3.3125rem;
+  border-radius: 1.65rem;
+  background-color: var(--chosen-color);
+  color:white;
+  transition: background-color 0.6s;
 }
