@@ -1,8 +1,7 @@
 import { useState, useRef } from 'react'
 import { useTimer } from './hooks/useTimer'
 import { InputNumber } from './components/InputNumber'
-import { InputRadioFont } from './components/InputRadioFont'
-import { InputRadioColor } from './components/InputRadioColor'
+import { InputRadio } from './components/InputRadio'
 import './assets/styles/sass/main.scss'
 
 function App() {
@@ -136,9 +135,9 @@ function App() {
               <fieldset className='form-setting__fieldset'>
                 <legend className='form-setting__legend'>Font</legend>
                 <div className="form-setting__radio-group">
-                  <InputRadioFont cat='A' checked={true} />
-                  <InputRadioFont cat='B' />
-                  <InputRadioFont cat='C' />
+                  <InputRadio isFont={true} cat='A' checked={true} />
+                  <InputRadio isFont={true} cat='B' />
+                  <InputRadio isFont={true} cat='C' />
                 </div>
               </fieldset>
             </div>
@@ -146,9 +145,9 @@ function App() {
               <fieldset className='form-setting__fieldset'>
                 <legend className='form-setting__legend'>Color</legend>
                 <div className="form-setting__radio-group">
-                  <InputRadioColor cat='A' checked={true} />
-                  <InputRadioColor cat='B' />
-                  <InputRadioColor cat='C' />
+                  <InputRadio isFont={false} cat='A' checked={true} />
+                  <InputRadio isFont={false} cat='B' />
+                  <InputRadio isFont={false} cat='C' />
                 </div>
               </fieldset>
             </div>
