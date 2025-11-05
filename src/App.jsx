@@ -5,7 +5,7 @@ import { InputRadio } from './components/InputRadio'
 import './assets/styles/sass/main.scss'
 
 function App() {
-  const isUnitMinute = false
+  const isUnitMinute = true
   const [taskDuration, setTaskDuration] = useState(25 * (isUnitMinute ? 60 : 1))
   const [taskDisplay, setTaskDisplay] = useState(taskDuration)
   const [shortBreakDuration, setShortBreakDuration] = useState(5 * (isUnitMinute ? 60 : 1))
@@ -30,7 +30,7 @@ function App() {
     if (isUnitMinute) {
       const minutes = Math.floor(num / 60)
       const seconds = num % 60
-      return (minutes<10 ? "0" : "") + minutes + ":" + (seconds<10 ? "0" : "") + seconds
+      return `${minutes<10 ? "0" : ""}${minutes}:${seconds<10 ? "0" : ""}${seconds}`
     }
     return num
   }
@@ -79,7 +79,9 @@ function App() {
   function toggleDialog() {
     setDialogIsOpen(prevIsOpen => {
       const newIsOpen = !prevIsOpen;
-      newIsOpen ? dialogBox.current.showModal() : dialogBox.current.close()
+      if(dialogBox.current){
+        newIsOpen ? dialogBox.current.showModal() : dialogBox.current.close()
+      }
       return newIsOpen;
     });
   }
@@ -89,11 +91,13 @@ function App() {
       <main className='container'>
         <div className='container__top'>
           <h1>Pomodoro</h1>
-          <ul className='timer-steps'>
-            <li className={`timer-steps__step ${(activeTimer === 1) && 'timer-steps__step--active'}`}>Pomodoro</li>
-            <li className={`timer-steps__step ${(activeTimer === 2) && 'timer-steps__step--active'}`}>Short break</li>
-            <li className={`timer-steps__step ${(activeTimer === 3) && 'timer-steps__step--active'}`}>Long break</li>
-          </ul>
+          <nav className='timers-nav' aria-label="Timer steps progression">
+            <ul className='timer-steps'>
+              <li className={`timer-steps__step ${(activeTimer === 1) && 'timer-steps__step--active'}`}>Pomodoro</li>
+              <li className={`timer-steps__step ${(activeTimer === 2) && 'timer-steps__step--active'}`}>Short break</li>
+              <li className={`timer-steps__step ${(activeTimer === 3) && 'timer-steps__step--active'}`}>Long break</li>
+            </ul>
+          </nav>
         </div>
         <div className="clock">
           <div className='clock__disc'>
