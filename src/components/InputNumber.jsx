@@ -36,12 +36,12 @@ export function InputNumber({inputId, name, defaultValue}){
     <div className="form-setting__time-input-wrapper">
         <input type="number" className="form-setting__time-input" min={1} max={59} id={inputId} name={name} value={value} onChange={handleChange} />
         <div className="time-input__arrow-buttons">
-            <button className="time-input__arrow-button" id="incrementBtn" type="button" onClick={increment}>
+            <button className="time-input__arrow-button" id={`incrementBtn${inputId}`} type="button" onClick={increment}>
               <svg className="time-input__arrow-button__icon" xmlns="http://www.w3.org/2000/svg" width="14" height="7">
                 <path fill="none" strokeWidth="2" d="M1 6l6-4 6 4"/>
               </svg>
             </button>
-            <button className="time-input__arrow-button" id="decrementBtn" type="button" onClick={decrement}>
+            <button className="time-input__arrow-button" id={`decrementBtn${inputId}`} type="button" onClick={decrement}>
               <svg className="time-input__arrow-button__icon" xmlns="http://www.w3.org/2000/svg" width="14" height="7">
                 <path fill="none" stroke="#1E213F" strokeOpacity=".25" strokeWidth="2" d="M1 1l6 4 6-4"/>
               </svg>
