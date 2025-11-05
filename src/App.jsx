@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useTimer } from './hooks/useTimer'
 import { InputNumber } from './components/InputNumber'
 import { InputRadio } from './components/InputRadio'
@@ -90,19 +90,19 @@ function App() {
   }
 
   function toggleDialog() {
-    setDialogIsOpen(prevIsOpen => {
-      const newIsOpen = !prevIsOpen;
-      const dialog = dialogBox.current
-      if(dialog){
-        if(newIsOpen && typeof dialog.showModal === 'function') {
-          dialog.showModal()
-        } else if(!newIsOpen && typeof dialog.close === 'function') {
-          dialog.close()
-        }
-      }
-      return newIsOpen;
-    });
+    setDialogIsOpen(prevIsOpen => !prevIsOpen);
   }
+  
+  useEffect(()=>{
+    const dialog = dialogBox.current
+    if(!dialog) return
+
+    if(dialogIsOpen && typeof dialog.showModal === 'function') {
+      dialog.showModal()
+    } else if(!dialogIsOpen && typeof dialog.close === 'function') {
+      dialog.close()
+    }
+  }, [dialogIsOpen])
 
   return (
     <>
