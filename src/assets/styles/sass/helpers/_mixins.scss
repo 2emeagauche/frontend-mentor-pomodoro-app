@@ -5,7 +5,7 @@
 @mixin breakpoint($size) {
   $breakpoint-value: map.get(v.$breakpoints, $size);
   
-  @if $breakpoint-value == null {
+  @if not $breakpoint-value {
     @error "Breakpoint '#{$size}' n'existe pas dans la map $breakpoints.";
   }
   

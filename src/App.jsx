@@ -5,7 +5,7 @@ import { InputRadio } from './components/InputRadio'
 import './assets/styles/sass/main.scss'
 
 function App() {
-  const isUnitMinute = true
+  const isUnitMinute = false
   const [taskDuration, setTaskDuration] = useState(25 * (isUnitMinute ? 60 : 1))
   const [taskDisplay, setTaskDisplay] = useState(taskDuration)
   const [shortBreakDuration, setShortBreakDuration] = useState(5 * (isUnitMinute ? 60 : 1))
@@ -40,6 +40,7 @@ function App() {
       case 1: return taskDisplay
       case 2: return shortBreakDisplay
       case 3: return longBreakDisplay
+      default: return null
     }
   }
 
@@ -48,6 +49,7 @@ function App() {
       case 1: return (taskDisplay / taskDuration) * 100
       case 2: return (shortBreakDisplay / shortBreakDuration) * 100
       case 3: return (longBreakDisplay / longBreakDuration) * 100
+      default: return 0
     }
   }
 
@@ -75,13 +77,16 @@ function App() {
   }
 
   function toggleDialog() {
-    setDialogIsOpen(!dialogIsOpen)
-    dialogIsOpen ? dialogBox.current.close() : dialogBox.current.showModal()
+    setDialogIsOpen(prevIsOpen => {
+      const newIsOpen = !prevIsOpen;
+      newIsOpen ? dialogBox.current.showModal() : dialogBox.current.close()
+      return newIsOpen;
+    });
   }
 
   return (
     <>
-      <div className='container'>
+      <main className='container'>
         <div className='container__top'>
           <h1>Pomodoro</h1>
           <ul className='timer-steps'>
@@ -94,9 +99,9 @@ function App() {
           <div className='clock__disc'>
             <div className='clock__hand' style={{ background: `conic-gradient(var(--chosen-color) ${progression()}%, transparent ${progression()}%) no-repeat` }}>
             </div>
-            <button className='clock__button clock__button--start' onClick={handleStart}>&nbsp;{start ? 'stop' : 'start'}</button>
+            <button type="button" className='clock__button clock__button--start' onClick={handleStart} aria-label={`${start ? 'stop' : 'start'} the timer`}>&nbsp;{start ? 'stop' : 'start'}</button>
             <p className='clock__numeric'>{clockDisplay(whichClock())}</p>
-            <button className='clock__button clock__button--pause' onClick={handleIsPaused}>&nbsp;{isPaused && start ? 'resume' : 'pause'}</button>
+            <button type="button" className='clock__button clock__button--pause' onClick={handleIsPaused} aria-label={`${isPaused ? 'resume' : 'pause'} the timer`}>&nbsp;{isPaused && start ? 'resume' : 'pause'}</button>
           </div>
         </div>
         <button type='button' className='button-setting' onClick={toggleDialog}>
@@ -105,12 +110,12 @@ function App() {
           </svg>
           <span className="sr-only">open the setting dialog box</span>
         </button>
-      </div>
+      </main>
       <dialog className='dialog-setting' ref={dialogBox}>
-        <div className="dialog-setting__background">
+        <section className="dialog-setting__background">
           <div className="dialog-setting__header">
             <h2 className='dialog-setting__title'>Setting</h2>
-            <button type='button' className='dialog-setting__button-close' onClick={toggleDialog}>
+            <button type='button' className='dialog-setting__button-close' onClick={toggleDialog} aria-label="close this modal box">
               <svg className='dialog-setting__button-close__icon' xmlns="http://www.w3.org/2000/svg" width="14" height="14">
                 <path fillRule="evenodd" d="M11.95.636l1.414 1.414L8.414 7l4.95 4.95-1.414 1.414L7 8.414l-4.95 4.95L.636 11.95 5.586 7 .636 2.05 2.05.636 7 5.586l4.95-4.95z" />
               </svg>
@@ -150,9 +155,9 @@ function App() {
                 </div>
               </fieldset>
             </div>
-            <button className='form-setting__submit' type='submit'>Apply</button>
+            <button className='form-setting__submit' type='submit' aria-label="apply tour settings">Apply</button>
           </form>
-        </div>
+        </section>
       </dialog>
     </>
   )

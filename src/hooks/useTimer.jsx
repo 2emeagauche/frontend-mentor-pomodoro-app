@@ -19,12 +19,12 @@ export function useTimer(
 
   const selectedTimer = useRef(null)
   const cycleCount = 4
-  let cycle = cycleCount
+  let cycle = useRef(cycleCount)
 
   function someBreak(t, shortBreakTimer, longBreakTimer) {
     t.resume().stop()
-    --cycle
-    if (cycle > 0) {
+    --cycle.current
+    if (cycle.current > 0) {
       setActiveTimer(2)
       shortBreakTimer.reset().start()
       selectedTimer.current = shortBreakTimer
@@ -32,7 +32,7 @@ export function useTimer(
       setActiveTimer(3)
       longBreakTimer.reset().start()
       selectedTimer.current = longBreakTimer
-      cycle = cycleCount
+      cycle.current = cycleCount
     }
   }
 
@@ -59,7 +59,7 @@ export function useTimer(
       .repeat(breakOptions[type].duration)
       .done((t) => {
         breakOptions[type].setDisplay(breakOptions[type].duration)
-        breakFinished(t, taskTimer, type)
+        breakFinished(t, taskTimer)
       })
   }
 
@@ -76,7 +76,7 @@ export function useTimer(
   function handleStart() {
     if (start) {
       selectedTimer.current.resume().stop()
-      cycle = cycleCount
+      cycle.current = cycleCount
       setIsStoped(new Date())
       setStart(false)
       setTaskDisplay(taskDuration)

@@ -41,7 +41,7 @@ h1 {
   @include typo.font-kumbh-sans;
   font-size: 1.5rem;
   font-weight: 700;
-  line-height: auto;
+  line-height: initial;
   letter-spacing: 0;
   text-align: center;
   text-transform: lowercase;
@@ -479,7 +479,11 @@ h1 {
   }
 }
 
-.form-setting__font-preview,
+.form-setting__font-preview {
+  grid-row: 1/-1;
+  grid-column: 1/-1;
+  margin: auto;
+}
 .form-setting__color-radio-tick {
   grid-row: 1/-1;
   grid-column: 1/-1;
