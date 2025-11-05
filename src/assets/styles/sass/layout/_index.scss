@@ -169,7 +169,7 @@ h1 {
 .clock__button--pause {
   margin-top: 9rem;
   @include mx.breakpoint('tablet-portrait'){
-    margin-bottom: 12rem;
+    margin-top: 12rem;
   }
 }
 
