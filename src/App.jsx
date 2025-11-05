@@ -26,7 +26,6 @@ function App() {
     }
   )
 
-
   function clockDisplay(num) {
     if (isUnitMinute) {
       const minutes = Math.floor(num / 60)

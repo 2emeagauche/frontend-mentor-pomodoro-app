@@ -21,7 +21,7 @@ export function useTimer(
   const cycleCount = 4
   let cycle = cycleCount
 
-  function somePause(t, shortBreakTimer, longBreakTimer) {
+  function someBreak(t, shortBreakTimer, longBreakTimer) {
     t.resume().stop()
     --cycle
     if (cycle > 0) {
@@ -98,7 +98,7 @@ export function useTimer(
       .action(handleSetTaskDisplay)
       .repeat(taskDuration)
       .done((t) => {
-        somePause(t, shortBreakTimer, longBreakTimer)
+        someBreak(t, shortBreakTimer, longBreakTimer)
         setTaskDisplay(taskDuration)
       })
     const shortBreakTimer = breakTimeHandler("short", taskTimer)
