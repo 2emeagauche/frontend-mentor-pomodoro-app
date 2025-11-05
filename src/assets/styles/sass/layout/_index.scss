@@ -156,14 +156,21 @@ h1 {
   display: block;
   color: v.$blue-100;
   text-transform: uppercase;
+  cursor: pointer;
 }
 
 .clock__button--start {
   margin-bottom: 9rem;
+  @include mx.breakpoint('tablet-portrait'){
+    margin-bottom: 11rem;
+  }
 }
 
 .clock__button--pause {
   margin-top: 9rem;
+  @include mx.breakpoint('tablet-portrait'){
+    margin-bottom: 12rem;
+  }
 }
 
 .clock__hand {
