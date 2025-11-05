@@ -84,12 +84,14 @@ function App() {
   return (
     <>
       <div className='container'>
-        <h1>Pomodoro</h1>
-        <ul className='timer-steps'>
-          <li className={`timer-steps__step ${(activeTimer === 1) && 'timer-steps__step--active'}`}>Pomodoro</li>
-          <li className={`timer-steps__step ${(activeTimer === 2) && 'timer-steps__step--active'}`}>Short break</li>
-          <li className={`timer-steps__step ${(activeTimer === 3) && 'timer-steps__step--active'}`}>Long break</li>
-        </ul>
+        <div className='container__top'>
+          <h1>Pomodoro</h1>
+          <ul className='timer-steps'>
+            <li className={`timer-steps__step ${(activeTimer === 1) && 'timer-steps__step--active'}`}>Pomodoro</li>
+            <li className={`timer-steps__step ${(activeTimer === 2) && 'timer-steps__step--active'}`}>Short break</li>
+            <li className={`timer-steps__step ${(activeTimer === 3) && 'timer-steps__step--active'}`}>Long break</li>
+          </ul>
+        </div>
         <div className="clock">
           <div className='clock__disc'>
             <div className='clock__hand' style={{ background: `conic-gradient(var(--chosen-color) ${progression()}%, transparent ${progression()}%) no-repeat` }}>
@@ -130,7 +132,7 @@ function App() {
                 </div>
               </fieldset>
             </div>
-            <div className="form-setting__block">
+            <div className="form-setting__block form-setting__block--radio">
               <fieldset className='form-setting__fieldset'>
                 <legend className='form-setting__legend'>Font</legend>
                 <div className="form-setting__radio-group">
@@ -140,7 +142,7 @@ function App() {
                 </div>
               </fieldset>
             </div>
-            <div className="form-setting__block">
+            <div className="form-setting__block form-setting__block--radio">
               <fieldset className='form-setting__fieldset'>
                 <legend className='form-setting__legend'>Color</legend>
                 <div className="form-setting__radio-group">
