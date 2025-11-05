@@ -1,11 +1,11 @@
 // Base
-@use 'base/_normalize.scss';
-@use 'base/_reset.scss';
+@use 'base/normalize.scss';
+@use 'base/reset.scss';
 // Helpers
-@use 'helpers/_variables.scss' as v;
-@use 'helpers/_mixins.scss' as mx;
-@use 'helpers/_sr-only.scss';
-@use 'helpers/_typography-mixins.scss';
-@use 'helpers/_custom-properties.scss';
+@use 'helpers/variables.scss' as v;
+@use 'helpers/mixins.scss' as mx;
+@use 'helpers/sr-only.scss';
+@use 'helpers/typography-mixins.scss';
+@use 'helpers/custom-properties.scss';
 // Layout
-@use 'layout/_index.scss';
+@use 'layout/index.scss';

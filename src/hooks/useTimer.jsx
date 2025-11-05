@@ -15,11 +15,11 @@ export function useTimer(
   const [isPaused, setIsPaused] = useState(false)
   const [start, setStart] = useState(false)
   const [activeTimer, setActiveTimer] = useState(1)
-  const [isStoped, setIsStoped] = useState(new Date())
+  const [isStopped, setIsStopped] = useState(new Date())
 
   const selectedTimer = useRef(null)
   const cycleCount = 4
-  let cycle = useRef(cycleCount)
+  const cycle = useRef(cycleCount)
 
   function someBreak(t, shortBreakTimer, longBreakTimer) {
     t.resume().stop()
@@ -77,7 +77,7 @@ export function useTimer(
     if (start) {
       selectedTimer.current.resume().stop()
       cycle.current = cycleCount
-      setIsStoped(new Date())
+      setIsStopped(new Date())
       setStart(false)
       setTaskDisplay(taskDuration)
       setShortBreakDisplay(shortBreakDuration)
@@ -119,7 +119,7 @@ export function useTimer(
       setStart(false)
     }
 
-  }, [taskDuration, shortBreakDuration, longBreakDuration, isStoped])
+  }, [taskDuration, shortBreakDuration, longBreakDuration, isStopped])
 
 
   return {

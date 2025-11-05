@@ -5,7 +5,7 @@ import { InputRadio } from './components/InputRadio'
 import './assets/styles/sass/main.scss'
 
 function App() {
-  const isUnitMinute = false
+  const isUnitMinute = true
   const [taskDuration, setTaskDuration] = useState(25 * (isUnitMinute ? 60 : 1))
   const [taskDisplay, setTaskDisplay] = useState(taskDuration)
   const [shortBreakDuration, setShortBreakDuration] = useState(5 * (isUnitMinute ? 60 : 1))
@@ -14,6 +14,11 @@ function App() {
   const [longBreakDisplay, setLongBreakDisplay] = useState(longBreakDuration)
   const [dialogIsOpen, setDialogIsOpen] = useState(false);
   const dialogBox = useRef(null)
+  const TIMER_STATES = {
+    TASK: 1,
+    SHORT_BREAK: 2,
+    LONG_BREAK: 3,
+  }
 
   const { isPaused, start, handleStart, handleIsPaused, activeTimer } = useTimer(
     {
@@ -30,25 +35,25 @@ function App() {
     if (isUnitMinute) {
       const minutes = Math.floor(num / 60)
       const seconds = num % 60
-      return (minutes<10 ? "0" : "") + minutes + ":" + (seconds<10 ? "0" : "") + seconds
+      return `${minutes<10 ? "0" : ""}${minutes}:${seconds<10 ? "0" : ""}${seconds}`
     }
     return num
   }
 
   function whichClock() {
     switch (activeTimer) {
-      case 1: return taskDisplay
-      case 2: return shortBreakDisplay
-      case 3: return longBreakDisplay
+      case TIMER_STATES.TASK: return taskDisplay
+      case TIMER_STATES.SHORT_BREAK: return shortBreakDisplay
+      case TIMER_STATES.LONG_BREAK: return longBreakDisplay
       default: return null
     }
   }
 
   function progression() {
     switch (activeTimer) {
-      case 1: return (taskDisplay / taskDuration) * 100
-      case 2: return (shortBreakDisplay / shortBreakDuration) * 100
-      case 3: return (longBreakDisplay / longBreakDuration) * 100
+      case TIMER_STATES.TASK: return (taskDisplay / taskDuration) * 100
+      case TIMER_STATES.SHORT_BREAK: return (shortBreakDisplay / shortBreakDuration) * 100
+      case TIMER_STATES.LONG_BREAK: return (longBreakDisplay / longBreakDuration) * 100
       default: return 0
     }
   }
@@ -56,19 +61,27 @@ function App() {
   function handleSubmit(e) {
     e.preventDefault()
     const formData = new FormData(e.target)
-    const task_value = formData.get("task_value") * (isUnitMinute ? 60 : 1)
-    const short_break_value = formData.get("short_break_value") * (isUnitMinute ? 60 : 1)
-    const long_break_value = formData.get("long_break_value") * (isUnitMinute ? 60 : 1)
 
-    if (task_value !== taskDuration) {
+    function parseInput(name) {
+      const value = formData.get(name)
+      const num = parseFloat(value)
+      if (isNaN(num)) return null
+      return isUnitMinute ? num * 60 : num
+    }
+
+    const task_value = parseInput("task_value")
+    const short_break_value = parseInput("short_break_value")
+    const long_break_value = parseInput("long_break_value")
+
+    if (task_value !== null && task_value !== taskDuration) {
       setTaskDuration(task_value)
       setTaskDisplay(task_value)
     }
-    if (short_break_value !== shortBreakDuration) {
+    if (short_break_value !== null && short_break_value !== shortBreakDuration) {
       setShortBreakDuration(short_break_value)
       setShortBreakDisplay(short_break_value)
     }
-    if (long_break_value !== longBreakDuration) {
+    if (long_break_value !== null && long_break_value !== longBreakDuration) {
       setLongBreakDuration(long_break_value)
       setLongBreakDisplay(long_break_value)
     }
@@ -79,7 +92,14 @@ function App() {
   function toggleDialog() {
     setDialogIsOpen(prevIsOpen => {
       const newIsOpen = !prevIsOpen;
-      newIsOpen ? dialogBox.current.showModal() : dialogBox.current.close()
+      const dialog = dialogBox.current
+      if(dialog){
+        if(newIsOpen && typeof dialog.showModal === 'function') {
+          dialog.showModal()
+        } else if(!newIsOpen && typeof dialog.close === 'function') {
+          dialog.close()
+        }
+      }
       return newIsOpen;
     });
   }
@@ -89,11 +109,13 @@ function App() {
       <main className='container'>
         <div className='container__top'>
           <h1>Pomodoro</h1>
-          <ul className='timer-steps'>
-            <li className={`timer-steps__step ${(activeTimer === 1) && 'timer-steps__step--active'}`}>Pomodoro</li>
-            <li className={`timer-steps__step ${(activeTimer === 2) && 'timer-steps__step--active'}`}>Short break</li>
-            <li className={`timer-steps__step ${(activeTimer === 3) && 'timer-steps__step--active'}`}>Long break</li>
-          </ul>
+          <nav className='timers-nav' aria-label="Timer steps progression">
+            <ul className='timer-steps'>
+              <li className={`timer-steps__step ${(activeTimer === 1) && 'timer-steps__step--active'}`}>Pomodoro</li>
+              <li className={`timer-steps__step ${(activeTimer === 2) && 'timer-steps__step--active'}`}>Short break</li>
+              <li className={`timer-steps__step ${(activeTimer === 3) && 'timer-steps__step--active'}`}>Long break</li>
+            </ul>
+          </nav>
         </div>
         <div className="clock">
           <div className='clock__disc'>
